@@ -123,6 +123,7 @@
 
 
 
+
 # 📌 Service Method Lists
 
 ### **User Service**
@@ -304,5 +305,35 @@ Unified edge entrypoint for routing, auth, and aggregation.
 5. User (Student/Faculty/Admin) receives notification.
 
 
+## 🏗️ Microservices Responsibility Chart
+
+```mermaid
+flowchart TB
+    subgraph Team Responsibilities
+        user[User Service\n👤 Tharindu\n(Create all users, roles, states)]
+        course[Course Service\n📚 Kalana\n(CRUD on courses, prerequisites)]
+        enroll[Enrollment Service\n📝 Chathura\n(CRUD + atomic Add/Drop)]
+        notif[Notification Service\n🔔 Sahan\n(Pub/Sub notifications)]
+        schedule[Schedule Service\n📅 Sahan\n(Calendar views, decorators)]
+        report[Reporting Service\n📊 Janith\n(Export CSV/XLSX/PDF)]
+        grades[Grades Service\n📝 Kalana\n(Batch grade processing)]
+        api[API Gateway / Auth\n🔐 Janith\n(Optional – Validate users)]
+    end
+
+    %% Grouping
+    classDef service fill=#f3f3f3,stroke=#555,stroke-width=1px,rx=10,ry=10;
+    class user,course,enroll,notif,schedule,report,grades,api service;
+
+    %% Relations (optional arrows to show dependencies)
+    api --> user
+    api --> course
+    api --> enroll
+    api --> grades
+    api --> report
+    api --> schedule
+    enroll --> notif
+    enroll --> course
+    enroll --> user
+    grades --> report
 
 
