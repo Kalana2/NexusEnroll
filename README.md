@@ -17,72 +17,106 @@
 ### File Structure
 
 ```
-    Backend/
-        +--- common/   # shared libs 
-            __init__.py 
-        +--- Db/
-            __init__.py
-            Singleton.
-        +--- Auth/
-            __init__.py
-        +--- User-Service
-        +--- Course-Service
-        +--- Entrollment-Service
-        +--- Notification-Service
-        +--- Schedule-Service
-        +--- Reporting-Service
-        +--- Grade-Service
-        +--- Api-Gateway
-        
+/NexusEnroll/
+│
+├── api-gateway/                        # Optional edge gateway
+│   ├── src/
+│   │   ├── routes/                     # Route definitions & aggregations
+│   │   ├── middleware/                 # Auth, logging, rate-limiting
+│   │   ├── services/                   # Calls to backend services
+│   │   ├── __init__.py (or main.go, etc.)
+│   │
+│   ├── Dockerfile
+│   └── package.json (or go.mod, etc.)
+│
+├── user-service/
+│   ├── src/
+│   │   ├── controllers/                # REST/GraphQL endpoints
+│   │   ├── models/                     # User, Role, UserState
+│   │   ├── services/                   # Business logic
+│   │   ├── repositories/               # DB access
+│   │   ├── events/                     # Publish user events (created, suspended)
+│   │   ├── __init__.py
+│   │
+│   ├── tests/
+│   ├── Dockerfile
+│   └── package.json
+│
+├── course-service/
+│   ├── src/
+│   │   ├── controllers/                # Manage courses, classes
+│   │   ├── models/                     # Course, Class, Prerequisites
+│   │   ├── services/                   # Capacity mgmt, validation
+│   │   ├── repositories/
+│   │   ├── events/                     # Publish updates for enrollment-service
+│   │   ├── __init__.py
+│   │
+│   ├── Dockerfile
+│   └── package.json
+│
+├── enrollment-service/
+│   ├── src/
+│   │   ├── controllers/                # Add/Drop endpoints
+│   │   ├── services/                   # Atomic transaction logic
+│   │   ├── models/                     # Enrollment, Waitlist
+│   │   ├── repositories/
+│   │   ├── events/                     # Notify capacity/waitlist changes
+│   │   ├── sagas/                      # Orchestrate cross-service transactions
+│   │   ├── __init__.py
+│   │
+│   ├── Dockerfile
+│   └── package.json
+│
+├── notification-service/
+│   ├── src/
+│   │   ├── subscribers/                # Listen to pub/sub topics
+│   │   ├── channels/                   # Email, SMS, WebPush adapters
+│   │   ├── services/                   # Observer logic
+│   │   ├── __init__.py
+│   │
+│   ├── Dockerfile
+│   └── package.json
+│
+├── schedule-service/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── decorators/                 # Flexible calendar decorators
+│   │   ├── services/                   # Calendar building logic
+│   │   ├── __init__.py
+│   │
+│   ├── Dockerfile
+│   └── package.json
+│
+├── reporting-service/
+│   ├── src/
+│   │   ├── controllers/                # Endpoints to export reports
+│   │   ├── adapters/                   # CSV, XLSX, PDF exporters
+│   │   ├── services/                   # Data aggregation
+│   │   ├── __init__.py
+│   │
+│   ├── Dockerfile
+│   └── package.json
+│
+├── grades-service/
+│   ├── src/
+│   │   ├── commands/                   # Batch grade commands
+│   │   ├── handlers/                   # Command pattern handlers
+│   │   ├── models/                     # Grade, Assignment, BatchJob
+│   │   ├── services/
+│   │   ├── __init__.py
+│   │
+│   ├── Dockerfile
+│   └── package.json
+│
+├── common-libs/                        # Shared libraries (optional)
+│   ├── auth/                           # JWT, OAuth utils
+│   ├── events/                         # Event bus/pubsub abstraction
+│   ├── db/                             # Common DB clients/config
+│   └── logger/                         # Shared logging
+│
+├── docker-compose.yml     
+│
+└── README.md
 
-
-      bus.py            # simple publisher/subscriber wrapper
-      schemas.py        # Pydantic event payloads
-
-       +-- User-Service/
-                +--- app.py #
 
 ```
-
-
-
----
-
-## 🧩 Layers
-
-1. **Adapters (I/O)**  
-   - `http.py`: FastAPI routes → map HTTP requests to domain services.  
-
-2. **Domain (Core Business)**  
-   - `models.py`: Classes like `Enrollment`, `ClassOffering`.  
-   - `transaction.py`: Implements **Proxy** → ensures commit/rollback semantics.  
-   - `service.py`: Orchestrates enrollment logic (calls repo, emits events).  
-
-3. **Infrastructure**  
-   - `db.py`: SQLAlchemy persistence.  
-   - `repo.py`: Encapsulates DB queries so domain logic doesn’t depend on SQL.  
-
----
-
-## 🛠 Design Patterns Used
-
-- **Proxy Pattern**  
-  `TransactionProxy` wraps `EnrollmentTransaction`. Ensures that dropping/adding a course is all-or-nothing.  
-
-- **Observer Pattern (via Event Bus)**  
-  Publishes `SeatOpened` event when a student drops a course → `notification-service` consumes event.  
-
----
-
-## 🔄 Enrollment Flow (Drop Course Example)
-
-1. API Gateway → `POST /classes/{id}/drop`
-2. FastAPI router → `EnrollmentService.drop_student(student_id, class_id)`
-3. `TransactionProxy` begins DB transaction
-4. Domain logic:
-   - Remove student from class  
-   - Increment available seats  
-   - Publish `SeatOpened` event  
-5. If any step fails → transaction rollback  
-6. Commit transaction, response returned  
-
