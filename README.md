@@ -14,6 +14,52 @@
 - **grades-service** – Batch grade processing (Command)
 - **api-gateway** *(optional)* – Routing / auth / aggregation
 
+
+## Microservices Responsibility Chart
+
+## 📋 Microservices Responsibility Table
+
+| Service             | Owner     | Responsibility                                   |
+|---------------------|-----------|-------------------------------------------------|
+| **User Service**    | Tharindu  | Manage users, roles, and states (Active/Suspended/Pending) |
+| **Course Service**  | Kalana    | CRUD operations on courses, classes, prerequisites, capacity |
+| **Enrollment Service** | Chathura | CRUD operations, atomic Add/Drop, waitlist handling |
+| **Notification Service** | Sahan   | Pub/Sub notifications (Email, SMS, Web) |
+| **Schedule Service** | Sahan    | Build flexible calendar views (Decorator pattern) |
+| **Reporting Service** | Janith   | Export reports in CSV/XLSX/PDF (Adapter pattern) |
+| **Grades Service**  | Kalana    | Batch grade processing (Command pattern) |
+| **API Gateway / Auth** | Janith   | Edge routing, user validation, aggregation (Optional) |
+
+
+
+```mermaid
+flowchart TB
+    subgraph Team_Responsibilities
+        user[User Service - Tharindu]
+        course[Course Service - Kalana]
+        enroll[Enrollment Service - Chathura]
+        notif[Notification Service - Sahan]
+        schedule[Schedule Service - Sahan]
+        report[Reporting Service - Janith]
+        grades[Grades Service - Kalana]
+        api[API Gateway/Auth - Janith]
+    end
+
+    %% Dependencies
+    api --> user
+    api --> course
+    api --> enroll
+    api --> grades
+    api --> report
+    api --> schedule
+    enroll --> notif
+    enroll --> course
+    enroll --> user
+    grades --> report
+
+```
+
+
 ### File Structure
 
 ```
@@ -303,37 +349,5 @@ Unified edge entrypoint for routing, auth, and aggregation.
 3. **Notification Service** checks subscriptions (who needs to be notified).
 4. **Notification Service** sends notification via Email/SMS/Web.
 5. User (Student/Faculty/Admin) receives notification.
-
-
-## 🏗️ Microservices Responsibility Chart
-
-```mermaid
-flowchart TB
-    subgraph Team Responsibilities
-        user[User Service\n👤 Tharindu\n(Create all users, roles, states)]
-        course[Course Service\n📚 Kalana\n(CRUD on courses, prerequisites)]
-        enroll[Enrollment Service\n📝 Chathura\n(CRUD + atomic Add/Drop)]
-        notif[Notification Service\n🔔 Sahan\n(Pub/Sub notifications)]
-        schedule[Schedule Service\n📅 Sahan\n(Calendar views, decorators)]
-        report[Reporting Service\n📊 Janith\n(Export CSV/XLSX/PDF)]
-        grades[Grades Service\n📝 Kalana\n(Batch grade processing)]
-        api[API Gateway / Auth\n🔐 Janith\n(Optional – Validate users)]
-    end
-
-    %% Grouping
-    classDef service fill=#f3f3f3,stroke=#555,stroke-width=1px,rx=10,ry=10;
-    class user,course,enroll,notif,schedule,report,grades,api service;
-
-    %% Relations (optional arrows to show dependencies)
-    api --> user
-    api --> course
-    api --> enroll
-    api --> grades
-    api --> report
-    api --> schedule
-    enroll --> notif
-    enroll --> course
-    enroll --> user
-    grades --> report
 
 
