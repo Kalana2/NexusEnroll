@@ -2,7 +2,7 @@
 
 
 
-## 📐 1. Backend Architecture Overview
+## 1. Backend Architecture Overview
 
 ### Microservices (bounded contexts)
 - **user-service** – Users, roles, user states (Active/Suspended/Pending)
