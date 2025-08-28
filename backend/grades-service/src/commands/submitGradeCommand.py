@@ -11,3 +11,8 @@ class submitGradeCommand(gradeCommand):
         print(
             f"Submitting grade {self.grade} for student {self.student_id} in course {self.course_id}"
         )
+        return {
+            "student_id": self.student_id,
+            "course_id": self.course_id,
+            "grade": self.grade,
+        }
