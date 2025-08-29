@@ -4,5 +4,5 @@ class CommandProcessor:
 
     def process(self, command):
         result = command.execute()
-        self.history.append(command)
+        self.history.append((command, result))
         return result

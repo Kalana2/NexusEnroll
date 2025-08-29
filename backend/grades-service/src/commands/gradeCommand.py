@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class gradeCommand(ABC):
+class GradeCommand(ABC):
     @abstractmethod
     def execute(self):
         pass
