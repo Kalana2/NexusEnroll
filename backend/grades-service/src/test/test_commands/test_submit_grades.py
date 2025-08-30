@@ -12,7 +12,7 @@ def test_submit_grades_command():
     ]
 
     cmd = SubmitGradesCommand(service, course_id, grade_batch)
-    result = cmd.execute()
+    result: dict = cmd.execute()
 
     assert result["status"] == "submitted"
     assert len(result["grades"]) == 2

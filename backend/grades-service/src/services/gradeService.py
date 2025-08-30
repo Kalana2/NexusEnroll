@@ -1,5 +1,7 @@
-class GradeService:
+from commands.gradeCommand import GradeCommand
 
+
+class GradeService:
     VALID_GRADES = {"A", "B", "C", "D", "F"}
 
     def __init__(self):
@@ -46,3 +48,6 @@ class GradeService:
 
     def getGrades(self, student_id):
         return self.grades.get(student_id, [])
+
+    def process(self, command: GradeCommand):
+        return command.execute()

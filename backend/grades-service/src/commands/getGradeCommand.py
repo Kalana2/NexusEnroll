@@ -2,9 +2,10 @@ from .gradeCommand import GradeCommand
 
 
 class GetGradeCommand(GradeCommand):
-    def __init__(self, student_id: int, course_id: int):
+    def __init__(self, student_id, grade_service):
         self.student_id = student_id
-        self.course_id = course_id
+        self.grade_service = grade_service
 
     def execute(self):
-        print(f"Getting grade for student {self.student_id} in course {self.course_id}")
+        print(f"Getting grades for student {self.student_id}")
+        return self.grade_service.getGrades(self.student_id)

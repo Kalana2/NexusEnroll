@@ -19,7 +19,7 @@ class ApprovalResult:
         }
 
 
-class ProcessGradesCommand(GradeCommand):
+class ApproveGradesCommand(GradeCommand):
     def __init__(self, grade_service, course_id: str):
         self.grade_service = grade_service
         self.course_id = course_id
@@ -32,12 +32,12 @@ class ProcessGradesCommand(GradeCommand):
                 True,
                 self.course_id,
                 count=result.get("count", 0),
-                message=f"Grades for course {self.course_id} processed successfully",
+                message=f"Grades for course {self.course_id} approved successfully",
             )
         else:
             return ApprovalResult(
                 False,
                 self.course_id,
                 count=0,
-                message=result.get("message", "Failed to process grades"),
+                message=result.get("message", "Failed to approve grades"),
             )

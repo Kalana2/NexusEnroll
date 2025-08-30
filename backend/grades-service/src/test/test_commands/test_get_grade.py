@@ -1,4 +1,3 @@
-import pytest
 from commands.getGradeCommand import GetGradeCommand
 from services.gradeService import GradeService
 
@@ -8,7 +7,7 @@ def test_get_grade_command():
     student_id = "S001"
 
     # First submit some grades
-    service.submit_grades("CS101", [{"studentId": student_id, "grade": "A"}])
+    service.submitGrades("CS101", [{"studentId": student_id, "grade": "A"}])
 
     cmd = GetGradeCommand(service, student_id)
     result = cmd.execute()
