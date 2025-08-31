@@ -5,7 +5,11 @@ class PrerequisiteRepository:
     def __init__(self):
         # In a real implementation, this would connect to a database
         # For this example, we'll use a simple in-memory storage
-        self.prerequisites = {"CS201": ["CS101"]}  # CS201 requires CS101
+        self.prerequisites = {
+            "CS201": ["CS101"],  # CS201 requires CS101
+            "CS301": ["CS201"],  # CS301 requires CS201
+            "MATH201": ["MATH101"],  # MATH201 requires MATH101
+        }
 
     def find_prerequisites(self, course_id: str) -> List[str]:
         """Find all prerequisites for a course"""

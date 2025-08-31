@@ -16,7 +16,7 @@ class CourseRepository:
             "CS101": Course(
                 id="CS101",
                 name="Introduction to Computer Science",
-                description="Fundamental concepts of computer science",
+                description="Fundamental concepts of computer science and programming",
                 department="Computer Science",
                 code="CS101",
                 instructor="Dr. Jane Smith",
@@ -24,6 +24,7 @@ class CourseRepository:
                 total_capacity=100,
                 current_enrollment=85,
                 prerequisites=[],
+                schedule=None,
             ),
             "CS201": Course(
                 id="CS201",
@@ -36,6 +37,20 @@ class CourseRepository:
                 total_capacity=80,
                 current_enrollment=75,
                 prerequisites=["CS101"],
+                schedule=None,
+            ),
+            "CS301": Course(
+                id="CS301",
+                name="Database Systems",
+                description="Design and implementation of database systems",
+                department="Computer Science",
+                code="CS301",
+                instructor="Dr. Alan Turing",
+                credits=3,
+                total_capacity=60,
+                current_enrollment=45,
+                prerequisites=["CS201"],
+                schedule=None,
             ),
             "MATH101": Course(
                 id="MATH101",
@@ -43,11 +58,38 @@ class CourseRepository:
                 description="Introduction to differential and integral calculus",
                 department="Mathematics",
                 code="MATH101",
-                instructor="Dr. Alan Turing",
+                instructor="Dr. Robert Johnson",
                 credits=4,
                 total_capacity=120,
                 current_enrollment=110,
                 prerequisites=[],
+                schedule=None,
+            ),
+            "MATH201": Course(
+                id="MATH201",
+                name="Linear Algebra",
+                description="Vector spaces, matrices, and linear transformations",
+                department="Mathematics",
+                code="MATH201",
+                instructor="Dr. Emily Chen",
+                credits=3,
+                total_capacity=90,
+                current_enrollment=70,
+                prerequisites=["MATH101"],
+                schedule=None,
+            ),
+            "PHYS101": Course(
+                id="PHYS101",
+                name="Physics I",
+                description="Mechanics, heat, and sound",
+                department="Physics",
+                code="PHYS101",
+                instructor="Dr. Michael Brown",
+                credits=4,
+                total_capacity=80,
+                current_enrollment=65,
+                prerequisites=[],
+                schedule=None,
             ),
         }
         return sample_data
@@ -55,6 +97,10 @@ class CourseRepository:
     def find_course_by_id(self, course_id: str) -> Optional[Course]:
         """Find a course by its ID"""
         return self.courses.get(course_id)
+
+    def find_all_courses(self) -> List[Course]:
+        """Get all courses"""
+        return list(self.courses.values())
 
     def find_courses(self, filters: Dict) -> List[Course]:
         """Find courses based on filters"""

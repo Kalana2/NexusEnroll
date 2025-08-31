@@ -1,6 +1,6 @@
 from typing import List
 from datetime import datetime
-from ..models.course_trend import CourseTrend
+from ..models.courseTrend import CourseTrend
 
 
 class AnalyticsRepository:
@@ -39,6 +39,24 @@ class AnalyticsRepository:
                 enrollment_rate=0.92,
                 waitlist_count=8,
                 trend_direction="stable",
+                last_updated=datetime.now(),
+            ),
+            CourseTrend(
+                course_id="CS301",
+                course_name="Database Systems",
+                popularity_score=8.1,
+                enrollment_rate=0.75,
+                waitlist_count=12,
+                trend_direction="up",
+                last_updated=datetime.now(),
+            ),
+            CourseTrend(
+                course_id="PHYS101",
+                course_name="Physics I",
+                popularity_score=6.9,
+                enrollment_rate=0.81,
+                waitlist_count=5,
+                trend_direction="down",
                 last_updated=datetime.now(),
             ),
         ]

@@ -6,19 +6,6 @@ def apply_course_filters(courses: List[Course], filters: Dict) -> List[Course]:
     """Apply filters to a list of courses"""
     filtered_courses = courses
 
-    # Apply keyword filter
-    if "keywords" in filters:
-        keywords = filters["keywords"].lower()
-        filtered_courses = [
-            course
-            for course in filtered_courses
-            if (
-                keywords in course.name.lower()
-                or keywords in course.description.lower()
-                or keywords in course.department.lower()
-            )
-        ]
-
     # Apply department filter
     if "department" in filters:
         department = filters["department"].lower()

@@ -1,12 +1,11 @@
 from fastapi import FastAPI, HTTPException, Query, Depends
 from typing import List, Optional, Dict
+
 from .config import settings
-from .models.course import Course, CourseUpdate, Schedule, DayOfWeek
-from .models.course_trend import CourseTrend
-from .services.course_service import CourseService
-from .services.prerequisite_service import PrerequisiteService
-from .repositories.course_repository import CourseRepository
-from .repositories.prerequisite_repository import PrerequisiteRepository
+from .models.course import Course, CourseUpdate
+from .models.courseTrend import CourseTrend
+from .services.courseService import CourseService
+from .services.prerequisiteService import PrerequisiteService
 
 app = FastAPI(title="Course Service", version="1.0.0")
 
@@ -40,14 +39,12 @@ async def browse_courses(
 ):
     """Browse courses with optional filtering"""
     filters = {}
-    if keywords:
-        filters["keywords"] = keywords
     if department:
         filters["department"] = department
     if instructor:
         filters["instructor"] = instructor
 
-    return service.browse_courses(filters)
+    return service.browse_courses(keywords, filters)
 
 
 @app.get("/courses/{course_id}", response_model=Course)
@@ -105,32 +102,6 @@ async def list_prerequisites(
     if prerequisites is None:
         raise HTTPException(status_code=404, detail="Course not found")
     return prerequisites
-
-
-@app.post("/prerequisites/{course_id}/{prerequisite_id}")
-async def add_prerequisite(
-    course_id: str,
-    prerequisite_id: str,
-    service: PrerequisiteService = Depends(get_prerequisite_service),
-):
-    """Add a prerequisite to a course"""
-    success = service.add_prerequisite(course_id, prerequisite_id)
-    if not success:
-        raise HTTPException(status_code=400, detail="Failed to add prerequisite")
-    return {"message": "Prerequisite added successfully"}
-
-
-@app.delete("/prerequisites/{course_id}/{prerequisite_id}")
-async def remove_prerequisite(
-    course_id: str,
-    prerequisite_id: str,
-    service: PrerequisiteService = Depends(get_prerequisite_service),
-):
-    """Remove a prerequisite from a course"""
-    success = service.remove_prerequisite(course_id, prerequisite_id)
-    if not success:
-        raise HTTPException(status_code=400, detail="Failed to remove prerequisite")
-    return {"message": "Prerequisite removed successfully"}
 
 
 if __name__ == "__main__":

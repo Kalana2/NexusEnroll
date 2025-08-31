@@ -1,3 +1,6 @@
+from typing import List
+
+
 def validate_course_data(course_data: dict) -> List[str]:
     """Validate course data and return list of errors"""
     errors = []

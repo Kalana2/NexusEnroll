@@ -1,9 +1,10 @@
 from typing import List, Dict, Optional
 from ..models.course import Course
-from ..models.course_trend import CourseTrend
-from ..repositories.course_repository import CourseRepository
-from ..repositories.analytics_repository import AnalyticsRepository
-from ..events.event_publisher import EventPublisher
+from ..models.courseTrend import CourseTrend
+from ..repositories.courseRepository import CourseRepository
+from ..repositories.analyticsRepository import AnalyticsRepository
+from ..events.eventPublisher import EventPublisher
+from ..utils.filters import apply_course_filters
 
 
 class CourseService:
@@ -12,9 +13,26 @@ class CourseService:
         self.analytics_repo = AnalyticsRepository()
         self.event_publisher = EventPublisher()
 
-    def browse_courses(self, filters: Dict) -> List[Course]:
-        """Browse courses with optional filters"""
-        return self.course_repo.find_courses(filters)
+    def browse_courses(self, keywords: Optional[str], filters: Dict) -> List[Course]:
+        """Browse courses with optional keywords and filters"""
+        all_courses = self.course_repo.find_all_courses()
+
+        # Apply keyword filtering if provided
+        if keywords:
+            filtered_courses = []
+            keyword_lower = keywords.lower()
+            for course in all_courses:
+                if (
+                    keyword_lower in course.name.lower()
+                    or keyword_lower in course.description.lower()
+                    or keyword_lower in course.department.lower()
+                    or keyword_lower in course.instructor.lower()
+                ):
+                    filtered_courses.append(course)
+            all_courses = filtered_courses
+
+        # Apply additional filters
+        return apply_course_filters(all_courses, filters)
 
     def get_course(self, course_id: str) -> Optional[Course]:
         """Get a specific course by ID"""
@@ -41,5 +59,5 @@ class CourseService:
         updated_course = self.course_repo.update_course(course_id, updates)
         if updated_course:
             # Publish course updated event
-            self.event_publisher.publish_course_updated(updated_course)
+            self.event_publisher.publish_course_updated(updated_course, updates)
         return updated_course
