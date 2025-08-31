@@ -1,5 +1,5 @@
 from typing import List, Dict, Optional
-from ..models.course import Course
+from models.course import Course
 import json
 import os
 

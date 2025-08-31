@@ -1,11 +1,11 @@
 from fastapi import FastAPI, HTTPException, Query, Depends
 from typing import List, Optional, Dict
 
-from .config import settings
-from .models.course import Course, CourseUpdate
-from .models.courseTrend import CourseTrend
-from .services.courseService import CourseService
-from .services.prerequisiteService import PrerequisiteService
+from config import settings
+from models.course import Course, CourseUpdate
+from models.courseTrend import CourseTrend
+from services.courseService import CourseService
+from services.prerequisiteService import PrerequisiteService
 
 app = FastAPI(title="Course Service", version="1.0.0")
 

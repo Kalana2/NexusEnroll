@@ -1,6 +1,6 @@
 from typing import List
 from datetime import datetime
-from ..models.courseTrend import CourseTrend
+from models.courseTrend import CourseTrend
 
 
 class AnalyticsRepository:

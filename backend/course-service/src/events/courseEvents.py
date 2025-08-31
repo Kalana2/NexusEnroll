@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, Dict, Any
-from ..models.course import Course
+from models.course import Course
 
 
 class CourseEvent(BaseModel):

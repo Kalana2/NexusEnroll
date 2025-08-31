@@ -1,5 +1,5 @@
 from typing import Dict, List
-from ..models.course import Course
+from models.course import Course
 
 
 def apply_course_filters(courses: List[Course], filters: Dict) -> List[Course]:

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from typing import List
-from ..services.prerequisiteService import PrerequisiteService
-from ..models.course import Course
+from services.prerequisiteService import PrerequisiteService
+from models.course import Course
 
 router = APIRouter(prefix="/prerequisites", tags=["prerequisites"])
 

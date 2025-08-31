@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Query, Depends, status
 from typing import List, Optional, Dict
-from ..services.courseService import CourseService
-from ..models.course import Course, CourseUpdate
-from ..models.courseTrend import CourseTrend
+from services.courseService import CourseService
+from models.course import Course, CourseUpdate
+from models.courseTrend import CourseTrend
 
 router = APIRouter(prefix="/courses", tags=["courses"])
 

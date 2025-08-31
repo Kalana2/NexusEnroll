@@ -1,7 +1,7 @@
 from typing import List, Optional
-from ..models.course import Course
-from ..repositories.prerequisiteRepository import PrerequisiteRepository
-from ..repositories.courseRepository import CourseRepository
+from models.course import Course
+from repositories.prerequisiteRepository import PrerequisiteRepository
+from repositories.courseRepository import CourseRepository
 
 
 class PrerequisiteService:

@@ -1,10 +1,10 @@
 from typing import List, Dict, Optional
-from ..models.course import Course
-from ..models.courseTrend import CourseTrend
-from ..repositories.courseRepository import CourseRepository
-from ..repositories.analyticsRepository import AnalyticsRepository
-from ..events.eventPublisher import EventPublisher
-from ..utils.filters import apply_course_filters
+from models.course import Course
+from models.courseTrend import CourseTrend
+from repositories.courseRepository import CourseRepository
+from repositories.analyticsRepository import AnalyticsRepository
+from events.eventPublisher import EventPublisher
+from utils.filters import apply_course_filters
 
 
 class CourseService:
