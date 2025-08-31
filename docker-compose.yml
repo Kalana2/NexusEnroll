@@ -8,6 +8,11 @@ services:
       - ./student-service/.env
     ports:
       - "8001:8001"
+    volumes:
+      - ./student-service/src:/app/src   # Mount local code
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    environment:
+      - PYTHONPATH=/app/src
 
   enrollment-service:
     build: ./enrollment-service
@@ -16,3 +21,8 @@ services:
       - ./enrollment-service/.env
     ports:
       - "8000:8000"
+    volumes:
+      - ./enrollment-service/src:/app/src
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      - PYTHONPATH=/app/src
