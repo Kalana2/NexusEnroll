@@ -14,6 +14,11 @@ grade_service = GradeService()
 processor = CommandProcessor()
 
 
+@app.get("/")
+def read_root() -> Any:
+    return {"message": "Welcome to the Grades Service!"}
+
+
 @app.post("/submitGrades/{courseId}")
 def submit_grades(course_id: str, grade_batch: list[dict]):
     cmd = SubmitGradesCommand(course_id, grade_batch)
@@ -36,8 +41,3 @@ def approve_grades(course_id: str):
 def process_grades(course_id: str):
     cmd = ProcessGradesCommand(grade_service, course_id)
     return processor.process(cmd)
-
-
-@app.get("/")
-def read_root() -> Any:
-    return {"message": "Welcome to the Grades Service!"}

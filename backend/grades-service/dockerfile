@@ -5,9 +5,10 @@ WORKDIR /app
 COPY src/ ./src
 
 RUN pip install uvicorn fastapi
+# RUN pip install --upgrade pip
 RUN pip install pytest httpx pytest-asyncio
 
 # Set PYTHONPATH to include src
 ENV PYTHONPATH=/app/src
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
