@@ -1,4 +1,5 @@
-from src.services.schedule_service import ScheduleService
+from services.schedule_service import ScheduleService
+
 
 class ScheduleController:
     def __init__(self):
