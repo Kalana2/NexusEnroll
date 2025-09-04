@@ -1,32 +1,21 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI
+from src.subscribers import event_subscriber
+from src.services.subscription_service import SubscriptionService
 from src.services.notification_service import NotificationService
-from src.subscribers.event_subscriber import EventSubscriber
 
-app = Flask(__name__)
+app = FastAPI(title="Notification Service")
 
-notification_service = NotificationService()
-event_subscriber = EventSubscriber(notification_service)
+subscription_service = SubscriptionService()
+notification_service = NotificationService(subscription_service)
 
-@app.route("/subscribe", methods=["POST"])
-def subscribe():
-    data = request.json
-    sub_id = notification_service.subscription_manager.subscribe(
-        data["userId"], data["eventType"], data["channel"], data["target"]
-    )
-    return jsonify({"subscriptionId": sub_id})
+@app.post("/subscribe")
+def subscribe(user_id: str, event_type: str, channel: str, target: str):
+    sub_id = subscription_service.subscribe(user_id, event_type, channel, target)
+    return {"subscription_id": sub_id}
 
-@app.route("/subscriptions/<user_id>", methods=["GET"])
-def list_subscriptions(user_id):
-    subs = notification_service.subscription_manager.list_subscriptions(user_id)
-    return jsonify(subs)
+@app.get("/subscriptions/{user_id}")
+def list_subscriptions(user_id: str):
+    subs = subscription_service.list_subscriptions(user_id)
+    return [{"id": s.id, "event": s.event_type, "channel": s.channel, "target": s.target} for s in subs]
 
-@app.route("/publish", methods=["POST"])
-def publish_event():
-    data = request.json
-    event_type = data["eventType"]
-    payload = data.get("payload", {})
-    event_subscriber.on_event(event_type, payload)
-    return jsonify({"status": "published", "eventType": event_type})
-
-if __name__ == "__main__":
-    app.run(port=5004, debug=True)
+app.include_router(event_subscriber.router)

@@ -1,31 +1,23 @@
 from src.channels.email_channel import EmailChannel
 from src.channels.sms_channel import SMSChannel
 from src.channels.webpush_channel import WebPushChannel
-from src.services.subscription_manager import SubscriptionManager
+from src.services.subscription_service import SubscriptionService
 
 class NotificationService:
-    def __init__(self):
-        self.subscription_manager = SubscriptionManager()
-        self.email_channel = EmailChannel()
-        self.sms_channel = SMSChannel()
-        self.web_channel = WebPushChannel()
+    def __init__(self, subscription_service: SubscriptionService):
+        self.subscription_service = subscription_service
 
-    def send_notification(self, user_id, message, channel, target):
-        """Send a direct notification to a user."""
+    def send_notification(self, user_id: str, message: str, channel: str, target: str):
         if channel == "Email":
-            return self.email_channel.send(target, message)
+            return EmailChannel.send(target, message)
         elif channel == "SMS":
-            return self.sms_channel.send(target, message)
+            return SMSChannel.send(target, message)
         elif channel == "Web":
-            return self.web_channel.send(user_id, message)
+            return WebPushChannel.send(target, message)
         else:
-            print(f"[NotificationService] Unknown channel {channel}")
-            return False
+            raise ValueError("Invalid channel")
 
-    def publish_event(self, event_type, payload):
-        """Publish event → notify subscribers."""
-        subscribers = self.subscription_manager.get_subscribers_for_event(event_type)
-        print(f"[NotificationService] Publishing event {event_type} to {len(subscribers)} subs")
-        for user_id, channel, target in subscribers:
-            message = f"Event {event_type} occurred. Details: {payload}"
-            self.send_notification(user_id, message, channel, target)
+    def publish_event(self, event_type: str, payload: dict):
+        subscribers = self.subscription_service.get_subscribers(event_type)
+        for sub in subscribers:
+            self.send_notification(sub.user_id, str(payload), sub.channel, sub.target)

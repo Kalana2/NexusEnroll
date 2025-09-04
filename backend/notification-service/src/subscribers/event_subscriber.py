@@ -1,10 +1,13 @@
+from fastapi import APIRouter
 from src.services.notification_service import NotificationService
+from src.services.subscription_service import SubscriptionService
 
-class EventSubscriber:
-    def __init__(self, notification_service: NotificationService):
-        self.notification_service = notification_service
+router = APIRouter()
 
-    def on_event(self, event_type, payload):
-        """Simulate receiving an event from Enrollment/Grades/etc."""
-        print(f"[EventSubscriber] Received {event_type} with payload {payload}")
-        self.notification_service.publish_event(event_type, payload)
+subscription_service = SubscriptionService()
+notification_service = NotificationService(subscription_service)
+
+@router.post("/events/publish")
+def publish_event(event_type: str, payload: dict):
+    notification_service.publish_event(event_type, payload)
+    return {"status": "event published"}
