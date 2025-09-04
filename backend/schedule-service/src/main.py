@@ -5,6 +5,11 @@ app = FastAPI(title="Schedule Service", version="1.0")
 controller = ScheduleController()
 
 
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Schedule Service API"}
+
+
 @app.get("/getStudentSchedule")
 def get_student_schedule(student_id: int, semester: str):
     return controller.get_student_schedule(student_id, semester)
