@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
         body: formData,
         credentials: 'include'
       });
+      
       const data = await response.json();
+      console.log(data);
       if (data.success) {
         if (data.role === 'admin') {
           window.location.href = '/admin';
