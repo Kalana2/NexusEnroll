@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexusEnroll</title>
+    <link rel="stylesheet" href="../../public/css/student.css" />
+    <script src="../../public/js/student.js"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="logo.png" />
+        <h1 class="sidebar-brand">NexusEnroll</h1>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-section-title">Student</div>
+        <ul>
+          <li class="nav-item">
+            <img src="img/course.png" />
+            Courses
+          </li>
+
+          <li class="nav-item" tabindex="0">
+            <img src="img/user.png" />
+            Users
+          </li>
+          <li class="nav-item" tabindex="0">
+            <img src="img/report.png" />
+            Reports
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-profile">
+        <img
+          src="https://i.pravatar.cc/40?img=23"
+          alt="Alex Morgan"
+          class="profile-pic"
+        />
+        <div class="profile-details">
+          <span class="profile-name">Annie Doe</span>
+          <span class="profile-role">Student</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-bar">
+        <input
+          type="text"
+          placeholder="Search courses, instructors, or keywords"
+        />
+        <button class="btn btn-primary">Search</button>
+      </header>
+
+      <section class="catalogue-wrap">
+        <div class="card filters">
+          <h3>Filters</h3>
+
+          <label class="field-label">Department</label>
+          <input type="text" placeholder="e.g., CS, MATH" />
+
+          <label class="field-label">Course Number</label>
+          <input type="text" placeholder="e.g., 101" />
+
+          <label class="field-label">Keyword</label>
+          <input type="text" placeholder="databases, AI" />
+
+          <label class="field-label">Instructor</label>
+          <input type="text" placeholder="Name" />
+
+          <label class="field-label">Semester</label>
+          <input type="text" placeholder="Fall 2025" />
+
+          <label class="field-label">Status</label>
+          <div class="status-options">
+            <label><input type="checkbox" /> Open</label>
+            <label><input type="checkbox" /> Waitlist</label>
+            <label><input type="checkbox" /> Full</label>
+          </div>
+
+          <div class="filters-actions">
+            <button class="btn reset">Reset</button>
+            <button class="btn apply">Apply</button>
+          </div>
+        </div>
+
+        <section class="card course-catalogue">
+          <h3>Course Catalogue</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Course Name</th>
+                <th>Instructor</th>
+                <th>Schedule</th>
+                <th>Capacity</th>
+                <th>Prerequisites</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CS 201</td>
+                <td>Data Structures</td>
+                <td>Dr. Patel</td>
+                <td>Mon/Wed 09:00–11:00 (Hall A)</td>
+                <td><span class="capacity available">19 / 25</span></td>
+                <td>CS 101</td>
+                <td>
+                  <button class="btn small ghost">View Details</button><br />
+                  <button class="btn small">Add to Cart</button>
+                </td>
+              </tr>
+              <tr>
+                <td>MATH 310</td>
+                <td>Linear Algebra</td>
+                <td>Prof. Nguyen</td>
+                <td>Tue/Thu 13:00–15:00 (Hall C)</td>
+                <td><span class="capacity limited">22 / 25</span></td>
+                <td>MATH 201</td>
+                <td>
+                  <button class="btn small ghost">View Details</button><br />
+                  <button class="btn small">Add to Cart</button>
+                </td>
+              </tr>
+              <tr>
+                <td>ENG 102</td>
+                <td>Composition II</td>
+                <td>Dr. Rao</td>
+                <td>Fri 09:00–11:30 (Hall E)</td>
+                <td><span class="capacity limited">27 / 30</span></td>
+                <td>ENG 101</td>
+                <td>
+                  <button class="btn small ghost">View Details</button><br />
+                  <button class="btn small">Add to Cart</button>
+                </td>
+              </tr>
+              <tr>
+                <td>CS 205</td>
+                <td>Algorithms</td>
+                <td>Dr. Kim</td>
+                <td>Tue/Thu 09:00–11:00 (Hall D)</td>
+                <td><span class="capacity available">18 / 30</span></td>
+                <td>CS 201</td>
+                <td>
+                  <button class="btn small ghost">View Details</button><br />
+                  <button class="btn small">Add to Cart</button>
+                </td>
+              </tr>
+              <tr>
+                <td>HIST 150</td>
+                <td>World History</td>
+                <td>Dr. Lopez</td>
+                <td>Mon/Wed 11:00–13:00 (Hall B)</td>
+                <td><span class="capacity full">31 / 30</span></td>
+                <td>None</td>
+                <td>
+                  <button class="btn small ghost">View Details</button><br />
+                  <button class="btn small">Add to Cart</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <section class="card registration">
+        <div class="section-head">
+          <h3>Registration & Enrollment</h3>
+          <button class="btn primary">Proceed to Enrollment</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Instructor</th>
+              <th>Schedule</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="enrollment-list">
+            <tr>
+              <td>CS 201 — Data Structures</td>
+              <td>Dr. Patel</td>
+              <td>Mon/Wed 09:00–11:00</td>
+              <td><span class="status-tag green">Ready to Enroll</span></td>
+              <td><button class="btn danger">Remove</button></td>
+            </tr>
+            <tr>
+              <td>MATH 310 — Linear Algebra</td>
+              <td>Prof. Nguyen</td>
+              <td>Tue/Thu 13:00–15:00</td>
+              <td><span class="status-tag orange">Pending Validation</span></td>
+              <td><button class="btn danger">Remove</button></td>
+            </tr>
+            <tr>
+              <td>ENG 102 — Composition II</td>
+              <td>Dr. Chen</td>
+              <td>Fri 09:00–11:30</td>
+              <td><span class="status-tag red">Time Conflict</span></td>
+              <td><button class="btn danger">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card schedule">
+        <h3>Schedule</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="showSchedule('current')">
+            Current Semester
+          </button>
+          <button class="tab-btn" onclick="showSchedule('past')">
+            Past Semesters
+          </button>
+        </div>
+
+        <div id="current" class="schedule-container">
+          <table class="timetable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>09:00–11:00</td>
+                <td>CS 201</td>
+                <td>CS 205</td>
+                <td>CS 201</td>
+                <td>CS 205</td>
+                <td>ENG 102</td>
+              </tr>
+              <tr>
+                <td>11:00–13:00</td>
+                <td>HIST 150</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>13:00–15:00</td>
+                <td></td>
+                <td>MATH 310</td>
+                <td></td>
+                <td>MATH 310</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div id="past" class="schedule-container" style="display: none">
+          <table class="timetable">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>09:00–11:00</td>
+                <td></td>
+                <td>MATH 201</td>
+                <td></td>
+                <td>CS 101</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>11:00–13:00</td>
+                <td>CS 101</td>
+                <td></td>
+                <td>ENG 101</td>
+                <td></td>
+                <td>CS 101</td>
+              </tr>
+              <tr>
+                <td>13:00–15:00</td>
+                <td>CS 201</td>
+                <td>MATH 201</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card progress">
+        <h3>Academic Progress</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Course Name</th>
+              <th>Semester</th>
+              <th>Grade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CS 101</td>
+              <td>Intro to CS</td>
+              <td>Fall 2024</td>
+              <td>A</td>
+            </tr>
+            <tr>
+              <td>ENG 101</td>
+              <td>Composition I</td>
+              <td>Spring 2024</td>
+              <td>B+</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="progress-title">Degree Requirements</div>
+        <p>Overall Progress:</p>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 40%">48/120</div>
+        </div>
+        <p>Core CS Credits:</p>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 70%">7/10</div>
+        </div>
+        <p>Math Requirements:</p>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 50%">2/4</div>
+        </div>
+        <p>Writing Intensive:</p>
+        <div class="progress-bar">
+          <div class="progress-bar-fill" style="width: 100%">3/3</div>
+        </div>
+      </section>
+    </main>
+
+    <script src="student.js"></script>
+  </body>
+</html>

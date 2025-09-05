@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>NexusEnroll</title>
+        <link rel="stylesheet" href="../../public/css/faculty.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="img/logo.png">
+                    <h1 class="sidebar-brand">NexusEnroll</h1>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <div class="sidebar-section-title">STAFF MEMBER</div>
+                    <ul>
+                        <li class="nav-item">
+                        <img src="img/course.png" >Courses
+                        </li>
+          
+                        <li class="nav-item" tabindex="0">
+                        <img src="img/grade.png" >Grades
+                        </li>
+          
+                        <li class="nav-item" tabindex="0">
+                        <img src="img/report.png" >Reports
+                        </li>
+          
+                    </ul>
+                </nav>
+
+                <div class="sidebar-profile">
+                    <img src="https://i.pravatar.cc/40?img=23" alt="Alex Morgan" class="profile-pic" />
+                    <div class="profile-details">
+                        <span class="profile-name">Alex Morgan</span>
+                        <span class="profile-role">Staff Member</span>
+                    </div>
+                </div>
+            </aside>
+
+      
+        <main class="main-content">
+            <header class="top-bar">
+            <div class="card">
+                <div class="notification btn-light expand">
+                    <img src="img/bell.png">Notifications</div>
+                <div class="notif-bar" style="margin-top:1rem;">New student enrolled to SA</div>
+            </div>
+          
+            <section class="enrolled-students-section card">
+                <div class="section-header">
+                    <h2>Enrolled Students by Course</h2>
+                </div>
+                <input type="search" placeholder="Search Course Name or ID"class="section-search" aria-label="Search Course Name or ID"/>
+                <button class="btn btn-primary ">Search</button>
+                <table class="table striped">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Contact NO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>STU-1042</td>
+                            <td>Jamie Lee</td>
+                            <td>jamie.lee@example.edu</td>
+                            <td>0712345678</td>
+                        </tr>
+                        <tr>
+                            <td>STU-1089</td>
+                            <td>Chris Paul</td>
+                            <td>chris.paul@example.edu</td>
+                            <td>0787654321</td>
+                        </tr>
+                        <tr>
+                            <td>STU-1110</td>
+                            <td>Ava Smith</td>
+                            <td>ava.smith@example.edu</td>
+                            <td>07712345678</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="enter-grades-section card">
+                <div class="section-header">
+                    <h2>Enter Grades by Course</h2>
+                </div>
+                <input type="search" placeholder="Search Course Name or ID" class="section-search" aria-label="Search Course Name or ID"/>
+                <button class="btn btn-primary ">Search</button>
+                <table class="table striped">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Current Grade</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>STU-1042</td>
+                            <td>Jamie Lee</td>
+                            <td>
+                                <input type="text" value="A-" class="grade-input" aria-label="Grade for Jamie Lee"/>
+                            </td>
+                            <td><span class="grade pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>STU-1089</td>
+                            <td>Chris Paul</td>
+                            <td>
+                                <input type="text" value="B+" class="grade-input" aria-label="Grade for Chris Paul"/>
+                            </td>
+                            <td><span class="grade submitted">Submitted</span></td>
+                        </tr>
+                        <tr>
+                            <td>STU-1110</td>
+                            <td>Ava Smith</td>
+                            <td>
+                                <input type="text" value="K" class="grade-input" aria-label="Grade for Ava Smith" />
+                            </td>
+                            <td><span class="grade invalid">Invalid grade</span></td>
+                        </tr>
+                    </tbody>
+              </table>
+              <button class="btn btn-primary btn-save-all">Save All Grades</button>
+            </section>
+            
+
+            <section class="course-details-section card">
+                <div class="section-header">
+                    <h2>Course Details</h2>
+                </div>
+                <input type="search" placeholder="Search Course Name or ID" class="section-search" aria-label="Search Course Name or ID" />
+                <button class="btn btn-primary ">Search</button>
+                
+                    <form class="course-form" autocomplete="off" novalidate>
+                            
+                            <label for="course-name">Course Name</label>
+                            <input id="course-name" type="text" value="Intro to Data Science" name="courseName" required />
+                        
+                            <label for="course-id">Course ID</label>
+                            <input id="course-id" type="text" value="DSC-201" name="courseId" readonly/>
+                        
+                            <label for="instructor">Instructor</label>
+                            <input id="instructor" type="text" value="Alex Morgan" name="instructor" />
+                       
+                            <label for="schedule">Schedule</label>
+                            <input id="schedule" type="text" value="Mon & Wed, 10:00-11:30" name="schedule" readonly/>
+                       
+                            <label for="capacity">Capacity</label>
+                            <input id="capacity" type="number" value="30" name="capacity" />
+                            
+                            <label for="credits">Credits</label>
+                            <input id="credits" type="number" value="3" name="credits" readonly />
+
+                            <label for="description">Description</label>
+                            <textarea id="description" rows="3" name="description">Foundational course covering data wrangling, visualization, and model evaluation.</textarea>
+
+                            <p class="note-info">
+                                Saving changes to description, prerequisites, or capacity will create
+                                a request for administrator approval.
+                            </p>
+                    </form>
+                    <button class="btn btn-primary btn-save-all">Save Changes</button>
+            </section>
+            
+        </main>
+        </div>
+    </body>
+</html>

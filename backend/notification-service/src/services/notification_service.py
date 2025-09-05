@@ -3,6 +3,7 @@ from src.channels.sms_channel import SMSChannel
 from src.channels.webpush_channel import WebPushChannel
 from src.services.subscription_service import SubscriptionService
 
+
 class NotificationService:
     def __init__(self, subscription_service: SubscriptionService):
         self.subscription_service = subscription_service
