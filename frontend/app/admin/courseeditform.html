@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Course - CSCI-201 Data Structures</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #6b7280;
+            padding: 20px;
+            color: #374151;
+        }
+
+        .modal-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 40px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .edit-icon {
+            width: 20px;
+            height: 20px;
+            background: #3b82f6;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-icon::before {
+            content: "✏";
+            color: white;
+            font-size: 12px;
+        }
+
+        .admin-badge {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .course-header {
+            padding: 0 24px 16px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .course-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .badge-undergraduate {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 24px;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s;
+        }
+
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .content {
+            padding: 24px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f9fafb;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .section-icon {
+            width: 16px;
+            height: 16px;
+            color: #6b7280;
+        }
+
+        .add-button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .add-button:hover {
+            background: #2563eb;
+        }
+
+        .add-button::before {
+            content: "+";
+            font-weight: bold;
+        }
+
+        .instructor-item, .search-input {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            margin: 0;
+            background: white;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .table th {
+            background: #f9fafb;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        .table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 14px;
+        }
+
+        .table tr:hover {
+            background: #f9fafb;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-edit, .btn-remove {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-edit {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .btn-remove {
+            background: #fecaca;
+            color: #dc2626;
+        }
+
+        .btn-edit::before {
+            content: "✏";
+            font-size: 10px;
+        }
+
+        .btn-remove::before {
+            content: "×";
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .policies-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .warning {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            color: #92400e;
+            font-size: 14px;
+            margin-top: 24px;
+        }
+
+        .warning::before {
+            content: "⚠";
+            color: #f59e0b;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+            border-radius: 0 0 12px 12px;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-back:hover {
+            background: #f3f4f6;
+        }
+
+        .btn-back::before {
+            content: "←";
+        }
+
+        .footer-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-discard {
+            color: #dc2626;
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-discard:hover {
+            background: #fef2f2;
+        }
+
+        .btn-save {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-save:hover {
+            background: #2563eb;
+        }
+
+        .btn-save::before {
+            content: "💾";
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <div class="edit-icon"></div>
+                    Edit course
+                </div>
+                <div class="admin-badge">Administrator</div>
+            </div>
+
+            <div class="course-header">
+                <h1 class="course-title">CSCI-201 • Data Structures</h1>
+                <div class="course-meta">
+                    <span class="badge badge-undergraduate">Undergraduate</span>
+                    <span class="badge badge-active">Active</span>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <a href="#" class="tab active">Details</a>
+                <a href="#" class="tab">Scheduling</a>
+                <a href="#" class="tab">Enrollment</a>
+            </div>
+
+            <div class="content">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="course-code">Course code</label>
+                        <input type="text" id="course-code" value="CSCI-201">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" value="Data Structures">
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department">
+                            <option selected>Computer Science</option>
+                            <option>Mathematics</option>
+                            <option>Engineering</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="credits">Credits</label>
+                        <input type="number" id="credits" value="3">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="description">Short description</label>
+                        <textarea id="description">Study of common data structures, algorithms, and applications.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="level">Level</label>
+                        <select id="level">
+                            <option selected>Undergraduate</option>
+                            <option>Graduate</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status">
+                            <option selected>Active</option>
+                            <option>Inactive</option>
+                            <option>Archived</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">👥</span>
+                        Instructors
+                    </div>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search or add instructor">
+                        <button class="add-button">Add</button>
+                    </div>
+                    <div>
+                        <span class="instructor-item">Prof. A. Rahman</span>
+                        <span class="instructor-item">Dr. L. Chen</span>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">📋</span>
+                        Prerequisites
+                    </div>
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search course">
+                        <button class="add-button">Add</button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Minimum Grade</th>
+                                <th>Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CSCI-101 • Intro to CS</td>
+                                <td>C</td>
+                                <td>Required</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn-edit">Edit</button>
+                                        <button class="btn-remove">Remove</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-icon">⚙️</span>
+                        Policies
+                    </div>
+                    <div class="policies-grid">
+                        <div class="form-group">
+                            <label for="grading-scheme">Grading scheme</label>
+                            <select id="grading-scheme">
+                                <option selected>A-F</option>
+                                <option>Pass/Fail</option>
+                                <option>Numeric</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="allow-audit">Allow audit</label>
+                            <select id="allow-audit">
+                                <option selected>No</option>
+                                <option>Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="repeatable">Repeatable</label>
+                            <select id="repeatable">
+                                <option selected>No</option>
+                                <option>Yes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="max-repeats">Max repeats</label>
+                            <input type="number" id="max-repeats" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    Changes affect upcoming terms unless applied to current sections in Scheduling.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn-back">Back</a>
+                <div class="footer-actions">
+                    <button class="btn-discard">✕ Discard</button>
+                    <button class="btn-save">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
