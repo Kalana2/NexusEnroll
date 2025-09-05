@@ -1,4 +1,7 @@
+
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+
 
 app = FastAPI()
 
@@ -6,4 +9,10 @@ app = FastAPI()
 def read_root():
     return {"message": "Enrollment Service is running!"}
 
-# Add more endpoints and logic as needed
+
+# Serve course enrollment form
+@app.get("/enroll", response_class=HTMLResponse)
+async def enroll_form():
+    with open("/app/frontend_admin/courseform.html", "r") as f:
+        html_content = f.read()
+    return html_content
