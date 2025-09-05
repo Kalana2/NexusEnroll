@@ -1,7 +1,7 @@
 fastapi
 uvicorn
 pydantic_settings
-
+supabase
 
 
 fastapi==0.104.1

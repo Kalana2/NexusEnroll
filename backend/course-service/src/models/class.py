@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import List
 
-
 from supabase import Client, create_client
 
 SUPABASE_URL = "https://gcepytafvxmgddfrhpah.supabase.co"
