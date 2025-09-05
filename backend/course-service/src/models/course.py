@@ -1,7 +1,79 @@
+from __future__ import annotations
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from enum import Enum
 from datetime import time
+
+from supabase import Client, create_client
+from typing import List, Optional, Dict, Any
+from pydantic import ValidationError
+
+SUPABASE_URL = "https://gcepytafvxmgddfrhpah.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjZXB5dGFmdnhtZ2RkZnJocGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwNjA2NTAsImV4cCI6MjA3MjYzNjY1MH0.vE3i9vOh2ZItBE4zp7FcCvoEOmtCdU4_MkUZSB4MhTo"
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+TABLE_NAME = "courses"
+
+
+def _handle_response(response) -> Optional[Any]:
+    # supabase-python returns an object with .data and .error on .execute()
+    if getattr(response, "error", None):
+        raise RuntimeError(f"Supabase error: {response.error}")
+    return getattr(response, "data", None)
+
+
+def list_courses() -> List[Course]:
+    """Return all courses from the courses table."""
+    res = supabase.table(TABLE_NAME).select("*").execute()
+    data = _handle_response(res)
+    return [Course(**item) for item in (data or [])]
+
+
+def get_course(course_id: str) -> Optional[Course]:
+    """Return a single course by id or None if not found."""
+    res = supabase.table(TABLE_NAME).select("*").eq("id", course_id).limit(1).execute()
+    data = _handle_response(res)
+    if not data:
+        return None
+    try:
+        return Course(**data[0])
+    except ValidationError as e:
+        raise RuntimeError(f"Data validation failed: {e}")
+
+
+def create_course(course: Course) -> Course:
+    """Insert a new course and return the created record."""
+    payload = course.dict()
+    res = supabase.table(TABLE_NAME).insert(payload).execute()
+    data = _handle_response(res)
+    if not data:
+        raise RuntimeError("Failed to create course")
+    try:
+        return Course(**data[0])
+    except ValidationError as e:
+        raise RuntimeError(f"Created data validation failed: {e}")
+
+
+def update_course(course_id: str, updates: CourseUpdate) -> Optional[Course]:
+    """Update fields of a course and return the updated record."""
+    payload = updates.dict(exclude_unset=True)
+    if not payload:
+        return get_course(course_id)
+    res = supabase.table(TABLE_NAME).update(payload).eq("id", course_id).execute()
+    data = _handle_response(res)
+    if not data:
+        return None
+    try:
+        return Course(**data[0])
+    except ValidationError as e:
+        raise RuntimeError(f"Updated data validation failed: {e}")
+
+
+def delete_course(course_id: str) -> bool:
+    """Delete a course by id. Returns True if a row was deleted."""
+    res = supabase.table(TABLE_NAME).delete().eq("id", course_id).execute()
+    data = _handle_response(res)
+    return bool(data)
 
 
 class DayOfWeek(str, Enum):
