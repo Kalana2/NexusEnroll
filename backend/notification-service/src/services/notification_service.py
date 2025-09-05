@@ -1,7 +1,7 @@
-from channels.email_channel import EmailChannel
-from channels.sms_channel import SMSChannel
-from channels.webpush_channel import WebPushChannel
-from services.subscription_service import SubscriptionService
+from src.channels.email_channel import EmailChannel
+from src.channels.sms_channel import SMSChannel
+from src.channels.webpush_channel import WebPushChannel
+from src.services.subscription_service import SubscriptionService
 
 
 class NotificationService:

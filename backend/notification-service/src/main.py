@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.subscribers import event_subscriber
+import importlib
 from src.services.subscription_service import SubscriptionService
 from src.services.notification_service import NotificationService
 
@@ -29,4 +29,19 @@ def list_subscriptions(user_id: str):
     ]
 
 
-app.include_router(event_subscriber.router)
+# Dynamically import the subscriber module and attach a router if it exposes one.
+# This avoids a hard attribute access that may not exist (e.g. router vs event_router).
+try:
+    mod = importlib.import_module("src.subscribers.event_subscriber")
+except Exception:
+    mod = None
+
+if mod is not None:
+    for attr_name in ("router", "event_router", "api_router"):
+        router = getattr(mod, attr_name, None)
+        if router is not None:
+            app.include_router(router)
+            break
+    else:
+        # No router found on the module; nothing to include.
+        pass
