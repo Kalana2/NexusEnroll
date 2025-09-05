@@ -1,0 +1,3 @@
+fastapi
+uvicorn
+# httpx  # uncomment when wiring real HTTP clients
