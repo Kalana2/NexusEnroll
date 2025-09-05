@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Creation Form</title>
+     <link rel="stylesheet" href="../../public/css/courseform.css" />
+    <script src="../../public/js/courseform.js"></script>
+</head>
+<body>
+     <div class="form-container">
+        
+    <div class="container">
+        <h1 class="heading">Add New Course</h1>
+        <p class="subheading">Create a new course offering with all necessary details and requirements.</p>
+    </div>
+    <!-- <div class="form-container"> -->
+        <div class="form-content">
+            <!-- Basic Information Section -->
+            <div class="section">
+                <h2 class="section-title">Basic Information</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="course-code">Course Code <span class="required">*</span></label>
+                        <input type="text" id="course-code" placeholder="e.g., CS 101">
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department <span class="required">*</span></label>
+                        <select id="department">
+                            <option value="">Select Department</option>
+                            <option value="cs">Computer Science</option>
+                            <option value="math">Mathematics</option>
+                            <option value="eng">Engineering</option>
+                            <option value="bus">Business</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="course-title">Course Title <span class="required">*</span></label>
+                        <input type="text" id="course-title" placeholder="e.g., Introduction to Computer Science">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="credit-hours">Credit <span class="required">*</span></label>
+                        <input type="number" id="credit-hours" value="3" min="1" max="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="student-capacity">Student Capacity <span class="required">*</span></label>
+                        <input type="number" id="student-capacity" value="30" min="1">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="course-description">Course Description <span class="required">*</span></label>
+                        <textarea id="course-description" placeholder="Provide a detailed description of the course content, objectives, and learning outcomes..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule & Semester Section -->
+            <div class="section">
+                <h2 class="section-title">Schedule & Semester</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="semester">Semester <span class="required">*</span></label>
+                        <select id="semester">
+                            <option value="">Select Semester</option>
+                            <option value="fall">Fall 2024</option>
+                            <option value="spring">Spring 2025</option>
+                            <option value="summer">Summer 2025</option>
+                        </select>
+                    </div>
+                    
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="start-time">Start Time <span class="required">*</span></label>
+                        <div class="time-input-wrapper">
+                            <input type="time" id="start-time">
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="end-time">End Time <span class="required">*</span></label>
+                        <div class="time-input-wrapper">
+                            <input type="time" id="end-time">
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="start-date">Start Date <span class="required">*</span></label>
+                        <div class="date-input-wrapper">
+                            <input type="date" id="start-date">
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date">End Date <span class="required">*</span></label>
+                        <div class="date-input-wrapper">
+                            <input type="date" id="end-date">
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty & Prerequisites Section -->
+            <div class="section">
+                <h2 class="section-title">Faculty & Prerequisites</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="instructor">Instructor Assignment <span class="required">*</span></label>
+                        <select id="instructor">
+                            <option value="">Select Instructor</option>
+                            <option value="dr-smith">Dr. Smith</option>
+                            <option value="prof-johnson">Prof. Johnson</option>
+                            <option value="dr-williams">Dr. Williams</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="room-assignment">Room Assignment</label>
+                        <input type="text" id="room-assignment" placeholder="e.g., Building A - Room 101">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label>Prerequisites</label>
+                        <div id="prerequisites-container">
+                            <div class="prerequisite-item">
+                                <input type="text" placeholder="e.g., MATH 101 - College Algebra">
+                                <button type="button" class="remove-button" onclick="removePrerequisite(this)">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="add-button" onclick="addPrerequisite()">+ Add Prerequisite</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Materials Section -->
+            <div class="section">
+                <h2 class="section-title">Course Materials</h2>
+                
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label>Required Textbooks</label>
+                        <div id="textbooks-container">
+                            <div class="textbook-row">
+                                <input type="text" placeholder="Book Title">
+                                <input type="text" placeholder="Author">
+                                <input type="text" placeholder="ISBN">
+                                <button type="button" class="remove-button" onclick="removeTextbook(this)">×</button>
+                            </div>
+                        </div>
+                        <button type="button" class="add-button" onclick="addTextbook()">+ Add Textbook</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="additional-resources">Additional Resources</label>
+                        <textarea id="additional-resources" placeholder="List any additional resources, online materials, software requirements, or supplementary readings..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <div class="secondary-actions">
+                    <button type="button" class="btn btn-secondary">📄 Save as Draft</button>
+                    <button type="button" class="btn btn-secondary">× Clear</button>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Course</button>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

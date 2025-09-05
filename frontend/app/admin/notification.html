@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusEnroll - Notifications</title>
+    
+    <link rel="stylesheet" href="../../public/css/notification.css" />
+    <script src="../../public/js/notification.js"></script>
+</head>
+<body>
+<div class="notification">
+    <div class="main-content">
+        <div class="header">
+            <h1 class="header-title">Notifications</h1>
+            <div class="header-actions">
+                <button class="header-btn primary">Mark all as read</button>
+            </div>
+        </div>
+        
+        <div class="page-content">
+            <div class="breadcrumbs">Administrator / <span>Notifications</span></div>
+
+            <div class="filter-bar">
+                <div class="filter-item">
+                    <label class="filter-label">Filter</label>
+                    <input type="text" placeholder="Search notifications" class="filter-input search">
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Type: All</label>
+                    <select class="filter-select">
+                        <option>All</option>
+                        <option>System</option>
+                        <option>Update</option>
+                        <option>Assignment</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label class="filter-label">Status: Unread</label>
+                    <select class="filter-select">
+                        <option>Unread</option>
+                        <option>Read</option>
+                        <option>All</option>
+                    </select>
+                </div>
+                <button class="more-filters-btn">search</button>
+            </div>
+
+            <div class="notifications-table">
+                <div class="table-header">
+                    <div class="table-cell">Message</div>
+                    <div class="table-cell">Type</div>
+                    <div class="table-cell">Time</div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell"><strong>NEW</strong> Course saved: Data Structures (CSCI-201) published successfully.</div>
+                    <div class="table-cell"><span class="type-label type-system">System</span></div>
+                    <div class="table-cell">Just now</div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">Section capacity for CSCI-201 updated to 60 in two sections.</div>
+                    <div class="table-cell"><span class="type-label type-update">Update</span></div>
+                    <div class="table-cell">5 min ago</div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">Instructor assigned: Dr. Maya Patel as Primary.</div>
+                    <div class="table-cell"><span class="type-label type-assignment">Assignment</span></div>
+                    <div class="table-cell">12 min ago</div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">Catalog sync completed for Fall 2025.</div>
+                    <div class="table-cell"><span class="type-label type-system">System</span></div>
+                    <div class="table-cell">1 hr ago</div>
+                </div>
+            </div>
+            <div class="no-notifications">Only unread notifications are shown. Change Status to see all.</div>
+              <button class="bottom-bar-btn primary">Back to Course</button>
+
+        </div>
+
+        
+          
+        
+    </div>
+</div>
+</body>
+</html>
