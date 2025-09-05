@@ -1,28 +1,68 @@
 version: "3.9"
 
 services:
-  student-service:
-    build: ./student-service
-    container_name: student-service
-    env_file:
-      - ./student-service/.env
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - USER_SERVICE_URL=http://user-service:8001
+      - COURSE_SERVICE_URL=http://course-service:8002
+      - ENROLLMENT_SERVICE_URL=http://enrollment-service:8003
+      - GRADES_SERVICE_URL=http://grades-service:8004
+      - REPORTING_SERVICE_URL=http://reporting-service:8005
+      - SCHEDULE_SERVICE_URL=http://schedule-service:8006
+      - NOTIFICATION_SERVICE_URL=http://notification-service:8007
+    depends_on:
+      - user-service
+      - course-service
+      - enrollment-service
+      - grades-service
+      - reporting-service
+      - schedule-service
+      - notification-service
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
     ports:
       - "8001:8001"
-    volumes:
-      - ./student-service/src:/app/src   # Mount local code
-    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
-    environment:
-      - PYTHONPATH=/app/src
+
+  course-service:
+    build: ./course-service
+    container_name: course-service
+    ports:
+      - "8002:8002"
 
   enrollment-service:
     build: ./enrollment-service
     container_name: enrollment-service
-    env_file:
-      - ./enrollment-service/.env
     ports:
-      - "8000:8000"
-    volumes:
-      - ./enrollment-service/src:/app/src
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      - "8003:8003"
+
+  grades-service:
+    build: ./grades-service
+    container_name: grades-service
+    ports:
+      - "8004:8004"
+
+  reporting-service:
+    build: ./reporting-service
+    container_name: reporting-service
+    ports:
+      - "8005:8005"
     environment:
-      - PYTHONPATH=/app/src
+      - EXPORT_DIR=/app/exports
+
+  schedule-service:
+    build: ./schedule-service
+    container_name: schedule-service
+    ports:
+      - "8006:8006"
+
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    ports:
+      - "8007:8007"
