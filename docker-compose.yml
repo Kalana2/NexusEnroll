@@ -1,8 +1,6 @@
-version: "3.9"
-
 services:
   api-gateway:
-    build: ./api-gateway
+    build: ./backend/api-gateway-service
     container_name: api-gateway
     ports:
       - "8000:8000"
@@ -22,33 +20,41 @@ services:
       - reporting-service
       - schedule-service
       - notification-service
+    volumes:
+      - ./backend/api-gateway-service:/app
+      - ./frontend/app/login:/app/frontend_login
+      - ./frontend/app/admin:/app/frontend_admin
+      - ./frontend/app/student:/app/frontend_student
+      - ./frontend/app/faculty:/app/frontend_faculty
+      - ./frontend/public:/app/public
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
 
   user-service:
-    build: ./user-service
+    build: ./backend/user-service
     container_name: user-service
     ports:
       - "8001:8001"
 
   course-service:
-    build: ./course-service
+    build: ./backend/course-service
     container_name: course-service
     ports:
       - "8002:8002"
 
   enrollment-service:
-    build: ./enrollment-service
+    build: ./backend/enrollment-service
     container_name: enrollment-service
     ports:
       - "8003:8003"
 
   grades-service:
-    build: ./grades-service
+    build: ./backend/grades-service
     container_name: grades-service
     ports:
       - "8004:8004"
 
   reporting-service:
-    build: ./reporting-service
+    build: ./backend/reporting-service
     container_name: reporting-service
     ports:
       - "8005:8005"
@@ -56,13 +62,13 @@ services:
       - EXPORT_DIR=/app/exports
 
   schedule-service:
-    build: ./schedule-service
+    build: ./backend/schedule-service
     container_name: schedule-service
     ports:
       - "8006:8006"
 
   notification-service:
-    build: ./notification-service
+    build: ./backend/notification-service
     container_name: notification-service
     ports:
       - "8007:8007"
