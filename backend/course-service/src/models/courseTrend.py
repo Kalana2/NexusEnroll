@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import datetimefrom
+from datetime import datetime
 from supabase import Client, create_client
 
 
@@ -13,8 +13,9 @@ TABLE_NAME = "course_trends"
 
 def get_all_course_trends():
     resp = supabase.table(TABLE_NAME).select("*").execute()
-    if getattr(resp, "error", None):
-        raise Exception(str(resp.error))
+    error = getattr(resp, "error", None)
+    if error:
+        raise Exception(str(error))
     return resp.data
 
 
@@ -26,16 +27,18 @@ def get_course_trend(course_id: str):
         .single()
         .execute()
     )
-    if getattr(resp, "error", None):
-        raise Exception(str(resp.error))
+    error = getattr(resp, "error", None)
+    if error:
+        raise Exception(str(error))
     return resp.data
 
 
 def create_course_trend(trend: "CourseTrend"):
     payload = trend.dict()
     resp = supabase.table(TABLE_NAME).insert(payload).execute()
-    if getattr(resp, "error", None):
-        raise Exception(str(resp.error))
+    error = getattr(resp, "error", None)
+    if error:
+        raise Exception(str(error))
     return resp.data
 
 
@@ -43,15 +46,17 @@ def update_course_trend(course_id: str, updates: dict):
     resp = (
         supabase.table(TABLE_NAME).update(updates).eq("course_id", course_id).execute()
     )
-    if getattr(resp, "error", None):
-        raise Exception(str(resp.error))
+    error = getattr(resp, "error", None)
+    if error:
+        raise Exception(str(error))
     return resp.data
 
 
 def delete_course_trend(course_id: str):
     resp = supabase.table(TABLE_NAME).delete().eq("course_id", course_id).execute()
-    if getattr(resp, "error", None):
-        raise Exception(str(resp.error))
+    error = getattr(resp, "error", None)
+    if error:
+        raise Exception(str(error))
     return resp.data
 
 
