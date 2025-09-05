@@ -7,6 +7,8 @@ COPY src/ ./src
 RUN pip install uvicorn fastapi
 # RUN pip install --upgrade pip
 RUN pip install pytest httpx pytest-asyncio
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Set PYTHONPATH to include src
 ENV PYTHONPATH=/app/src
