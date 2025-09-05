@@ -12,16 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const formData = new FormData(form);
       const response = await fetch('/login', {
         method: 'POST',
-        body: formData
+        body: formData,
+        credentials: 'include'
       });
       const data = await response.json();
-      const cookies = response.headers.getSetCookie();
-      console.log(cookies);
       if (data.success) {
         if (data.role === 'admin') {
           window.location.href = '/admin';
         } else if (data.role === 'student') {
-          // window.location.href = '/student';
+          window.location.href = '/student';
         } else if (data.role === 'faculty') {
           window.location.href = '/faculty';
         } else {
