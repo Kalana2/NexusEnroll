@@ -5,10 +5,6 @@ from fastapi.staticfiles import StaticFiles
 from supabase import create_client, Client
 
 
-
-
-
-
 SUPABASE_URL = "https://gcepytafvxmgddfrhpah.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjZXB5dGFmdnhtZ2RkZnJocGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwNjA2NTAsImV4cCI6MjA3MjYzNjY1MH0.vE3i9vOh2ZItBE4zp7FcCvoEOmtCdU4_MkUZSB4MhTo"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
@@ -35,7 +31,6 @@ async def root():
 @app.post("/login")
 async def login(email: str = Form(...), password: str = Form(...)):
 
-    print(email , password)
     # Query Supabase for user with matching email
     result = supabase.table("users").select("*").eq("email", email).execute()
     users = result.data
