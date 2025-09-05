@@ -4,4 +4,3 @@ class EmailChannel:
         print(f"[Email] Sending to {target}: {message}")
         # integrate with SMTP or SendGrid here
         return True
-
