@@ -12,14 +12,63 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 class ScheduleService:
     """Handles schedule building and decoration."""
 
-    def get_student_schedule(self, student_id, semester):
+    def get_student_schedule(self, student_id, semester="2025-Fall"):
         # want to replace with kalana return values
         return BaseSchedule(
-            [
-                {"day": "Monday", "date": "2025-09-01", "classes": ["Math", "Physics"]},
-                {"day": "Saturday", "date": "2025-09-06", "classes": ["Sports"]},
-                {"day": "Sunday", "date": "2025-09-07", "classes": []},
-            ]
+            {
+                "current": [
+                    {
+                        "time": "09:00–11:00",
+                        "mon": "CS 201",
+                        "tue": "CS 205",
+                        "wed": "CS 201",
+                        "thu": "CS 205",
+                        "fri": "ENG 102",
+                    },
+                    {
+                        "time": "11:00–13:00",
+                        "mon": "HIST 150",
+                        "tue": "",
+                        "wed": "",
+                        "thu": "",
+                        "fri": "",
+                    },
+                    {
+                        "time": "13:00–15:00",
+                        "mon": "",
+                        "tue": "MATH 310",
+                        "wed": "",
+                        "thu": "MATH 310",
+                        "fri": "",
+                    },
+                ],
+                "past": [
+                    {
+                        "time": "09:00–11:00",
+                        "mon": "",
+                        "tue": "MATH 201",
+                        "wed": "",
+                        "thu": "CS 101",
+                        "fri": "",
+                    },
+                    {
+                        "time": "11:00–13:00",
+                        "mon": "CS 101",
+                        "tue": "",
+                        "wed": "ENG 101",
+                        "thu": "",
+                        "fri": "CS 101",
+                    },
+                    {
+                        "time": "13:00–15:00",
+                        "mon": "CS 201",
+                        "tue": "MATH 201",
+                        "wed": "",
+                        "thu": "",
+                        "fri": "",
+                    },
+                ],
+            },
         )
 
     def add_calendar_decorator(self, schedule_view, decorator_type):

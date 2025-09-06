@@ -15,16 +15,16 @@ def read_root():
     return {"message": "Welcome to the Schedule Service API"}
 
 
-@app.get("/getStudentSchedule")
+@app.get("/getStudentSchedule/{student_id}")
 def get_student_schedule(student_id: int, semester: str):
-    return controller.get_student_schedule(student_id, semester)
+    return controller.get_student_schedule(student_id)
 
 
-@app.get("/addCalendarDecorator")
-def add_calendar_decorator(student_id: int, semester: str, decorator_type: str):
-    return controller.add_calendar_decorator(student_id, semester, decorator_type)
+# @app.get("/addCalendarDecorator")
+# def add_calendar_decorator(student_id: int, semester: str, decorator_type: str):
+#     return controller.add_calendar_decorator(student_id, semester, decorator_type)
 
 
-@app.get("/generateCalendar")
-def generate_calendar(student_id: int, format_type: str = "Weekly"):
-    return controller.generate_calendar(student_id, format_type)
+# @app.get("/generateCalendar")
+# def generate_calendar(student_id: int, format_type: str = "Weekly"):
+#     return controller.generate_calendar(student_id, format_type)

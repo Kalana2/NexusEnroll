@@ -5,8 +5,11 @@ class ScheduleController:
     def __init__(self):
         self.service = ScheduleService()
 
-    def get_student_schedule(self, student_id, semester):
-        return self.service.get_student_schedule(student_id, semester).get_content()
+    # def get_student_schedule(self, student_id, semester):
+    #     return self.service.get_student_schedule(student_id, semester).get_content()
+
+    def get_student_schedule(self, student_id):
+        return self.service.get_student_schedule(student_id).get_content()
 
     def add_calendar_decorator(self, student_id, semester, decorator_type):
         schedule = self.service.get_student_schedule(student_id, semester)
