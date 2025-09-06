@@ -1,17 +1,77 @@
 {
-"courses": [
-{ "id": "CS101", "name": "Introduction to Computer Science", "instructor": "Dr. Jane Smith", "schedule": "Fri 09:00–11:30 (Hall E)", "capacity": { "enrolled": 15, "total": 100 }, "prerequisites": "ENG 101" },
-{ "id": "CS201", "name": "Data Structures and Algorithms", "instructor": "Dr. John Doe", "schedule": "Fri 09:00–11:30 (Hall E)", "capacity": { "enrolled": 5, "total": 80 }, "prerequisites": "ENG 101" },
-{ "id": "CS301", "name": "Database Systems", "instructor": "Dr. Alan Turing", "schedule": "Fri 09:00–11:30 (Hall E)", "capacity": { "enrolled": 15, "total": 60 }, "prerequisites": "ENG 101" },
-{ "id": "MATH101", "name": "Calculus I", "instructor": "Dr. Robert Johnson", "schedule": "Fri 09:00–11:30 (Hall E)", "capacity": { "enrolled": 10, "total": 120 }, "prerequisites": "ENG 101" },
-{ "id": "MATH201", "name": "Linear Algebra", "instructor": "Dr. Emily Chen", "schedule": "Fri 09:00–11:30 (Hall E)", "capacity": { "enrolled": 20, "total": 90 }, "prerequisites": "ENG 101" },
-{ "id": "PHYS101", "name": "Physics I", "instructor": "Dr. Michael Brown", "schedule": "Fri 09:00–11:30 (Hall E)", "capacity": { "enrolled": 15, "total": 80 }, "prerequisites": "ENG 101" }
-],
-"enrollments": [],
-"users": [
-{ "id": 1, "email": "student1@example.com", "password": "password123", "role": "student", "name": "Alex Morgan" },
-{ "id": 2, "email": "faculty1@example.com", "password": "password123", "role": "faculty", "name": "Dr. Jane Smith" },
-{ "id": 3, "email": "admin1@example.com", "password": "password123", "role": "admin", "name": "System Admin" }
-],
-"notifications": []
+  "courses": [
+    {
+      "id": "CS101",
+      "name": "Introduction to Computer Science",
+      "instructor": "Dr. Jane Smith",
+      "schedule": "Fri 09:00–11:30 (Hall E)",
+      "capacity": { "enrolled": 15, "total": 100 },
+      "prerequisites": "ENG 101"
+    },
+    {
+      "id": "CS201",
+      "name": "Data Structures and Algorithms",
+      "instructor": "Dr. John Doe",
+      "schedule": "Fri 09:00–11:30 (Hall E)",
+      "capacity": { "enrolled": 5, "total": 80 },
+      "prerequisites": "ENG 101"
+    },
+    {
+      "id": "CS301",
+      "name": "Database Systems",
+      "instructor": "Dr. Alan Turing",
+      "schedule": "Fri 09:00–11:30 (Hall E)",
+      "capacity": { "enrolled": 15, "total": 60 },
+      "prerequisites": "ENG 101"
+    },
+    {
+      "id": "MATH101",
+      "name": "Calculus I",
+      "instructor": "Dr. Robert Johnson",
+      "schedule": "Fri 09:00–11:30 (Hall E)",
+      "capacity": { "enrolled": 10, "total": 120 },
+      "prerequisites": "ENG 101"
+    },
+    {
+      "id": "MATH201",
+      "name": "Linear Algebra",
+      "instructor": "Dr. Emily Chen",
+      "schedule": "Fri 09:00–11:30 (Hall E)",
+      "capacity": { "enrolled": 20, "total": 90 },
+      "prerequisites": "ENG 101"
+    },
+    {
+      "id": "PHYS101",
+      "name": "Physics I",
+      "instructor": "Dr. Michael Brown",
+      "schedule": "Fri 09:00–11:30 (Hall E)",
+      "capacity": { "enrolled": 15, "total": 80 },
+      "prerequisites": "ENG 101"
+    }
+  ],
+  "enrollments": [],
+  "users": [
+    {
+      "id": 1,
+      "email": "student1@example.com",
+      "password": "password123",
+      "role": "student",
+      "name": "Alex Morgan"
+    },
+    {
+      "id": 2,
+      "email": "faculty1@example.com",
+      "password": "password123",
+      "role": "faculty",
+      "name": "Dr. Jane Smith"
+    },
+    {
+      "id": 3,
+      "email": "admin1@example.com",
+      "password": "password123",
+      "role": "admin",
+      "name": "System Admin"
+    }
+  ],
+  "notifications": []
 }

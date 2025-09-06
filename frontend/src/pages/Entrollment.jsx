@@ -1,13 +1,16 @@
+import { toast } from "react-toastify";
+
 function removeFromCart(setCart , setCourses , course){
     setCart(c=>c.filter(c=>c.name != course.name))
     setCourses(c=>[...c ,course]);
+    toast(" ✅ " + course.name + " removed from the cart")
 }
 
 export default function Enrollment({course , setCart ,setCourses}){
     return <tr>
             <td>{course.name}</td>
             <td>{course.instructor}</td>
-            <td>Mon/Wed 09:00–11:00</td>
+            <td>{course?.schedule}</td>
             <td>
             <span className="status-tag green">Ready to Enroll</span>
             </td>

@@ -1,13 +1,15 @@
 // src/pages/FacultyDashboard.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./faculty.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell, faIdCard, faSignIn } from "@fortawesome/free-solid-svg-icons";
 
-const FacultyDashboard = () => {
-  const [students, setStudents] = useState([
-    { id: "STU-1042", name: "Jamie Lee", email: "jamie.lee@example.edu", contact: "0712345678" },
-    { id: "STU-1089", name: "Chris Paul", email: "chris.paul@example.edu", contact: "0787654321" },
-    { id: "STU-1110", name: "Ava Smith", email: "ava.smith@example.edu", contact: "07712345678" },
-  ]);
+const FacultyDashboard = ({setRole,appState ,setAppState}) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+
+
 
   const [grades, setGrades] = useState([
     { id: "STU-1042", name: "Jamie Lee", grade: "A-", status: "Pending" },
@@ -32,6 +34,24 @@ const FacultyDashboard = () => {
     );
   };
 
+  useEffect(() => {
+  if (!searchQuery.trim()) {
+    setSearchResults([]);
+    return;
+  }
+
+  const results = appState.courses.filter((course) =>
+    [course.id, course.name, course.instructor, course.department, course.semester]
+      .filter(Boolean)
+      .some((field) =>
+        field.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+  );
+
+  setSearchResults(results);
+}, [searchQuery, appState.courses]);
+
+
   const saveGrades = () => {
     console.log("Saving grades:", grades);
     alert("Grades saved!");
@@ -47,7 +67,7 @@ const FacultyDashboard = () => {
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-header">
-          <img src="/static/img/logo.png" alt="logo" />
+          <img src="/src/img/logo.png" alt="logo" />
           <h1 className="sidebar-brand">NexusEnroll</h1>
         </div>
 
@@ -55,16 +75,20 @@ const FacultyDashboard = () => {
           <div className="sidebar-section-title">STAFF MEMBER</div>
           <ul>
             <li className="nav-item">
-              <img src="/static/img/course.png" alt="courses" />
+              <img src="/src/img/course.png" alt="courses" />
               Courses
             </li>
             <li className="nav-item">
-              <img src="/static/img/grade.png" alt="grades" />
+              <FontAwesomeIcon icon={faIdCard} />
               Grades
             </li>
             <li className="nav-item">
-              <img src="/static/img/report.png" alt="reports" />
+              <img src="/src/img/report.png" alt="reports" />
               Reports
+            </li>
+            <li onClick={()=>setRole(false)} className="nav-item" tabIndex={0} style={{color : "#f25757" }}>
+                <FontAwesomeIcon icon={faSignIn} />
+                  log out
             </li>
           </ul>
         </nav>
@@ -88,7 +112,7 @@ const FacultyDashboard = () => {
         <header className="top-bar">
           <div className="card">
             <div className="notification btn-light expand">
-              <img src="/static/img/bell.png" alt="bell" /> Notifications
+              <FontAwesomeIcon icon={faBell} /> Notifications
             </div>
             <div className="notif-bar" style={{ marginTop: "1rem" }}>
               New student enrolled to SA
@@ -117,14 +141,15 @@ const FacultyDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map((s) => (
-                <tr key={s.id}>
+              {appState.users.map((s) => {
+                if (s.role != 'student') return <></>
+                return <tr key={s.id}>
                   <td>{s.id}</td>
                   <td>{s.name}</td>
                   <td>{s.email}</td>
                   <td>{s.contact}</td>
                 </tr>
-              ))}
+              })}
             </tbody>
           </table>
         </section>
@@ -187,12 +212,39 @@ const FacultyDashboard = () => {
           <div className="section-header">
             <h2>Course Details</h2>
           </div>
-          <input
-            type="search"
-            placeholder="Search Course Name or ID"
-            className="section-search"
-          />
-          <button className="btn btn-primary">Search</button>
+
+              <header className="top-bar" style={{ position: "relative" }}>
+                  <input
+                    type="text"
+                    name="search"
+                    className="section-search"
+                    placeholder="Search courses, instructors, or keywords"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                <button className="btn btn-primary">Search</button>
+                </header>
+                {searchQuery && (
+                  <div className="search-dropdown">
+                    {searchResults.length === 0 ? (
+                      <div className="search-item">No results for "{searchQuery}"</div>
+                    ) : (
+                      searchResults.map((course, i) => (
+                        <div
+                          key={i}
+                          className="search-item"
+                          onClick={() => {
+                            // addToCart(course); // or navigate to details
+                            setSearchQuery(""); // close dropdown
+                          }}
+                        >
+                          <strong>{course.id}</strong> - {course.name}  
+                          <span style={{ color: "gray" }}> ({course.instructor})</span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
 
           <form className="course-form" autoComplete="off" noValidate>
             <label htmlFor="course-name">Course Name</label>

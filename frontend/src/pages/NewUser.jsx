@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./createuser.scss";
 
-const CreateUser = () => {
+const CreateUser = ({onClick ,appState , setAppState}) => {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -19,6 +19,13 @@ const CreateUser = () => {
     setForm((prev) => ({ ...prev, [id]: value }));
   };
 
+   function save(newUser) {
+        setAppState(state=>{
+            return {...state, users : [...state.users , newUser]};
+        })
+    }
+    
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -26,6 +33,10 @@ const CreateUser = () => {
       alert("Passwords do not match!");
       return;
     }
+
+
+
+   
 
     // Prepare new user object
     const newUser = {
@@ -35,16 +46,18 @@ const CreateUser = () => {
       program: form.program,
       department: form.department,
       password: form.password,
+      id: Date.now() + appState?.users?.length
     };
 
     try {
-      const res = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
+      // const res = await fetch("http://localhost:8000/users", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(newUser),
+      // });
 
-      if (!res.ok) throw new Error("Failed to create user");
+      // if (!res.ok) throw new Error("Failed to create user");
+      save(newUser);
 
       alert("User created successfully!");
       setForm({
@@ -174,8 +187,7 @@ const CreateUser = () => {
             <button
               type="button"
               className="back"
-              onClick={() => alert("Going back...")}
-            >
+              onClick={onClick}>
               Back
             </button>
             <button type="submit" className="continue">

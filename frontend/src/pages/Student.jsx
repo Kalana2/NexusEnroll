@@ -7,6 +7,7 @@ import { Element, Link } from "react-scroll";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faSignIn, faTrophy } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
+import { useMemo } from "react";
 
 
 
@@ -31,37 +32,71 @@ function notify({course ,msg}){
 
 
 
-const Student = ({setRole}) => {
+const Student = ({setRole ,appState ,setAppState}) => {
         const [cart , setCart] = useState([]);
         const [courses , setCourses] = useState([]);
-        // const [filter , setFilter] = useState({})
+        const [filters, setFilters] = useState({
+            department: "",
+            courseName: "",
+            instructor: "",
+            semester: "",
+            keyword: "",
+        });
 
+
+        // inside Student component
+        const filteredCourses = useMemo(() => {
+        return appState.courses.filter((course) => {
+            return (
+            (filters.department === "" ||
+                course.department
+                ?.toLowerCase()
+                .includes(filters.department.toLowerCase())) &&
+            (filters.courseName === "" ||
+                course.id?.toLowerCase().includes(filters.courseName.toLowerCase()) ||
+                course.name?.toLowerCase().includes(filters.courseName.toLowerCase())) &&
+            (filters.instructor === "" ||
+                course.instructor
+                ?.toLowerCase()
+                .includes(filters.instructor.toLowerCase())) &&
+            (filters.semester === "" ||
+                course.semester
+                ?.toLowerCase()
+                .includes(filters.semester.toLowerCase())) &&
+            (filters.keyword === "" ||
+                course.keywords?.some((kw) =>
+                kw.toLowerCase().includes(filters.keyword.toLowerCase())
+                ))
+            );
+        });
+        }, [filters, appState.courses]);
+
+
+        // const [filter , setFilter] = useState({})
 
     useEffect(()=>{
         getCourses(setCourses)
     },[])
 
-    useEffect(()=>{
-        //checkfor time confict
-        cart.forEach(c=>{
-            cart.forEach(t=>{
-                if(c.schedule == t.schedule){
-                    c.status = "conflict";
-                    t.status = "conflict";
-                    notify({msg:c.name + " has time conflict"});
-                    notify({msg:t.name + " has time conflict"});
-                }
-            })
-        })
-    },[cart])
+    // useEffect(()=>{
+    //     //checkfor time confict
+    //     cart.forEach(c=>{
+    //         cart.forEach(t=>{
+    //             if(c.schedule == t.schedule){
+    //                 c.status = "conflict";
+    //                 t.status = "conflict";
+    //                 notify({msg:c.name + " has time conflict"});
+    //                 notify({msg:t.name + " has time conflict"});
+    //             }
+    //         })
+    //     })
+    // },[cart])
 
     function addToCart(course){
         setCourses(courses.filter(c=>c.name != course.name));
         setCart(c=>[...c , course]);
         notify({course});
     }
-
-
 
     return (
         <div className="student-page student">
@@ -137,23 +172,23 @@ const Student = ({setRole}) => {
             <div className="card filters">
                 <h3>Filters</h3>
                 <label className="field-label">Department</label>
-                <input type="text" name="department" placeholder="e.g., CS, MATH" />
+                <input type="text" value={filters.department} onChange={(e)=>setFilters((s)=>{return {...s , department: e.target.value}})} name="department" placeholder="e.g., CS, MATH" />
 
                 <label className="field-label">Course Number</label>
-                <input type="text" name="id" placeholder="e.g., 101" />
+                <input type="text" name="id" value={filters.courseName} onChange={(e)=>setFilters((s)=>{return {...s , courseName: e.target.value}})} placeholder="e.g., 101" />
 
                 <label className="field-label">Keyword</label>
-                <input type="text" name="keyword" placeholder="databases, AI" />
+                <input type="text" name="keyword" value={filters.courseName} onChange={(e)=>setFilters((s)=>{return {...s , courseName: e.target.value}})} placeholder="databases, AI" />
 
                 <label className="field-label">Instructor</label>
-                <input type="text" name="instructor" placeholder="Name" />
+                <input type="text" name="instructor" value={filters.instructor} onChange={(e)=>setFilters((s)=>{return {...s , instructor: e.target.value}})} placeholder="Name" />
 
                 <label className="field-label">Semester</label>
-                <input type="text" name="semester" placeholder="Fall 2025" />
+                <input type="text" name="semester" value={filters.semester} onChange={(e)=>setFilters((s)=>{return {...s , semester: e.target.value}})} placeholder="Fall 2025" />
 
                 <label className="field-label">Status</label>
-                <div className="status-options">
-                <label>
+                {/*<div className="status-options">
+                 <label>
                     <input type="checkbox" name="open" /> Open
                 </label>
                 <label>
@@ -162,12 +197,12 @@ const Student = ({setRole}) => {
                 <label>
                     <input type="checkbox" name="full" /> Full
                 </label>
-                </div>
+                </div> */}
 
-                <div className="filters-actions">
+                {/* <div className="filters-actions">
                 <button className="btn reset">Reset</button>
                 <button className="btn apply">Apply</button>
-                </div>
+                </div> */}
             </div>
 
             <section className="card course-catalogue">
@@ -185,7 +220,7 @@ const Student = ({setRole}) => {
                     </tr>
                 </thead>
                 <tbody className="course_list">
-                {courses.map((c , i)=> <Course addToCart={addToCart} key={i} course={c}/>)}
+                {filteredCourses?.map((c , i)=> <Course addToCart={addToCart} key={i} course={c}/>)}
                 </tbody>
                 </table>
             </section>

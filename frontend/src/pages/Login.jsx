@@ -31,7 +31,7 @@ export default function Login({setRole}){
         <div class="modal">
             <div class="modal-header">
             <div class="header-content">
-                <div class="logo"><img src="/static/logo.png" /></div>
+                <div class="logo"><img src="/src/img/logo.png" /></div>
                 <div class="header-text">
                 <h2>Welcome Back</h2>
                 <p>Sign in to your account</p>

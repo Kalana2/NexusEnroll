@@ -1,18 +1,40 @@
 import { faSignIn } from "@fortawesome/free-solid-svg-icons";
+import { CourseRepository } from './../patterns/repository/CourseRepository'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./admin.scss";
 // import "./courseeditform.scss";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import NewCourseForm from "./NewCourseForm";
+import CreateUser from "./NewUser";
+import EditUser from "./UserEdit";
 // import "./courseform.css";
 // import "./createuser.css";
 
-export default function Admin({setRole}){
+export default function Admin({setRole,appState ,setAppState}){
     const [openNewCourseFrom , setOpenNewCourseForm] = useState(false);
+    const [openCreateUserForm , setOpenCreateUserForm] = useState(false);
+    const [openEditUserForm , setEditUserForm] = useState(false);
+    const [user , setUser] = useState({});
     
-    if(openNewCourseFrom){
-        return <NewCourseForm />
+
+    function deleteUser(d_user){
+        setAppState(state=>{
+            return {...state , users : appState.users.filter(user=>user.id != d_user.id)};
+        })
     }
+
+
+  
+    if(openNewCourseFrom){
+        return <NewCourseForm onClick={()=>setOpenNewCourseForm(false)}  />
+    }
+    if(openCreateUserForm){
+        return <CreateUser onClick={()=>setOpenCreateUserForm(false)}  appState={appState} setAppState={setAppState}/>
+    }
+    if(openEditUserForm){
+        return <EditUser onClick={()=>setEditUserForm(false)}  appState={appState} setAppState={setAppState} user={user} />
+    }
+
 
 
     return <>
@@ -119,11 +141,11 @@ export default function Admin({setRole}){
                 </table>
 
                 <div class="pagination" role="navigation" aria-label="Pagination">
-                <div class="pagination-info">Showing 1-3 of 128</div>
-                <div class="pagination-controls">
+                <div class="pagination-info">Showing 1-{appState?.users?.length} of {appState?.users?.length} </div>
+                {/* <div class="pagination-controls">
                     <button class="btn small-btn3" aria-label="Previous Page">← Previous</button>
                     <button class="btn small-btn3" aria-label="Next Page">Next →</button>
-                </div>
+                </div> */}
                 </div>
 
             </div>
@@ -140,7 +162,7 @@ export default function Admin({setRole}){
 
             <div class ="course">     
                 <div class="table-actions">
-                <button onclick="window.location.href='createuser.html'" class="btn new-course-btn">+ New user</button>
+                <button onclick="window.location.href='createuser.html'" onClick={()=>setOpenCreateUserForm(true)} class="btn new-course-btn">+ New user</button>
                 
                 </div>
 
@@ -156,33 +178,19 @@ export default function Admin({setRole}){
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                    <td>S2025001</td>
-                    <td>Aanya Fernando</td>
-                    <td>aanya.fernando@gmail.com</td>
-                    <td>+94 71 234 5678</td>
-                    <td>BSc Computer Science</td>
-                    <td><button onclick="window.location.href='useredit.html'" class="btn small-btn">Edit</button></td>
-                    <td><button onclick="confirmDelete()" class="btn small-btn21">Delete</button></td>
-                    </tr>
-                    <tr>
-                    <td>S2025002</td>
-                    <td>Nimal Perera</td>
-                    <td>nimal.perera@gmail.com</td>
-                    <td>+94 76 456 1234</td>
-                    <td>BA Business Administration</td>
-                    <td><button onclick="window.location.href='useredit.html'" class="btn small-btn">Edit</button></td>
-                    <td><button onclick="confirmDelete()" class="btn small-btn21">Delete</button></td>
-                    </tr>
-                    <tr>
-                    <td>S2025004</td>
-                    <td>Kaveesha Gunasekara</td>
-                    <td>kaveesha.g@gmail.com</td>
-                    <td>+94 72 345 6789</td>
-                    <td>BBA Human Resource Management</td>
-                    <td><button onclick="window.location.href='useredit.html'" class="btn small-btn">Edit</button></td>
-                    <td><button onclick="confirmDelete()" class="btn small-btn21">Delete</button></td>
-                    </tr>
+                    {
+                        appState?.users?.map((user , key)=>{
+                            return <tr key={key}>
+                                <td>{user.id}</td>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.phone}</td>
+                                <td>{user.program}</td>
+                                <td><button  onClick={()=>{setUser(user); setEditUserForm(true)}} class="btn small-btn">Edit</button></td>
+                                <td><button  onClick={()=>deleteUser(user)} class="btn small-btn21">Delete</button></td>
+                                </tr>
+                        })
+                    }
                 </tbody>
                 </table>
 

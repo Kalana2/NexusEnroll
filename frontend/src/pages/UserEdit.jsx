@@ -1,18 +1,26 @@
 // src/pages/EditUser.jsx
-import React, { useState } from "react";
-import "./createuser.css";
+import React, { useEffect, useState } from "react";
+import "./createuser.scss";
 
-const EditUser = () => {
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    role: "Student / Faculty / Administrator",
-    program: "",
-    department: "",
-    password: "",
-    confirmPassword: "",
-  });
+const EditUser = ({onClick , appState , setAppState , user}) => {
+  const [form, setForm] = useState({});
+
+  useEffect(()=>{
+    setForm((form)=>{
+      return {...form,
+        firstName: user.name,
+        lastName: user.name,
+        email: user.email,
+        role: user.role,
+        program: user.degree,
+        department: user.department,
+        password: user.password,
+        confirmPassword: user.password,
+        id:user.id,
+    }})
+
+  } , [user])
+
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -26,6 +34,10 @@ const EditUser = () => {
       alert("Passwords do not match!");
       return;
     }
+
+    setAppState(state=>{
+      return {...state , user: state.users?.map(user=>user.id == form.id ? form : user )}
+    })
 
     console.log("Form submitted:", form);
     alert("User saved successfully!");
@@ -142,11 +154,11 @@ const EditUser = () => {
             <button
               type="button"
               className="back"
-              onClick={() => alert("Going back...")}
+              onClick={onClick}
             >
               Back
             </button>
-            <button type="submit" className="continue">
+            <button type="submit" className="continue" onClick={handleSubmit}>
               Save
             </button>
           </div>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./courseform.scss";
 
 
-const NewCourseForm = () => {
+const NewCourseForm = ({onClick}) => {
     const [prerequisites, setPrerequisites] = useState([""]);
     const [textbooks, setTextbooks] = useState([{ title: "", author: "", isbn: "" }]);
     const [startDate , setStartDate] = useState('');
@@ -317,7 +317,7 @@ const NewCourseForm = () => {
             <button type="button" className="btn btn-secondary">
               📄 Save as Draft
             </button>
-            <button type="reset" className="btn btn-secondary">
+            <button type="reset" className="btn btn-secondary" onClick={onClick}>
               × Clear
             </button>
           </div>
