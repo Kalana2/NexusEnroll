@@ -7,7 +7,7 @@ import FacultyDashboard from './pages/FacultyDashboard.jsx';
 
 
 function App() {
-  const [role, setRole] = useState('faculty');
+  const [role, setRole] = useState('');
   const [appState ,setAppState] = useState({
     courses:[
       {
