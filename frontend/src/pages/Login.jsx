@@ -13,8 +13,7 @@ import "./login.css";
     });
     const data = await response.json()
     if(data.success) setRole(data.role);
-    console.log(data);
-    alert("user name or password invalid");
+    else alert("user name or password invalid");
 }
 
 
