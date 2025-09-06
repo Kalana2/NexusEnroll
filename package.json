@@ -1,0 +1,30 @@
+{
+  "name": "nexusentroll",
+  "version": "1.0.0",
+  "description": "intergated version",
+  "keywords": [
+    "kalana",
+    "sahan",
+    "tharindu",
+    "janith",
+    "chathura",
+    "sewmini",
+    "videesha",
+    "chathuni"
+  ],
+  "homepage": "https://github.com/Kalana2/NexusEnroll#readme",
+  "bugs": {
+    "url": "https://github.com/Kalana2/NexusEnroll/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kalana2/NexusEnroll.git"
+  },
+  "license": "ISC",
+  "author": "kalana,sahan,tharindu,janith,chathura,sewmini,videesha,chathuni",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

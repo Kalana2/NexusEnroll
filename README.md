@@ -351,3 +351,22 @@ Unified edge entrypoint for routing, auth, and aggregation.
 5. User (Student/Faculty/Admin) receives notification.
 
 
+# Frontend Architecture
+
+
+## how to run Run
+| Go to inside ./frontend
+1. cd ./frontend
+2. npm i
+3. npm run api # starts json-server on http://localhost:3001
+4. npm run dev # starts React app on http://localhost:5173
+
+
+## Where patterns live
+- Facade: src/patterns/facade/EnrollmentFacade.ts
+- Repository: src/patterns/repository/CourseRepository.ts
+- Strategy: src/patterns/strategy/validation.ts
+- Command: src/patterns/command/commands.ts
+- Observer: src/patterns/observer/EventBus.tsx
+- Adapter: src/services/apiClient.ts (ApiError)
+- Factory (example idea): could add a NotificationFactory to build Notification objects per type.
