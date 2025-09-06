@@ -18,8 +18,8 @@ app = FastAPI(title="Course Service", version="1.0.0")
 
 # List of allowed origins (frontend URLs that can call this backend)
 origins = [
-    "http://localhost:8080",   # React, Vue, Angular dev server
-    "http://127.0.0.1:8080",
+    "http://localhost:5175",   # React, Vue, Angular dev server
+    "http://127.0.0.1:5175",
     "*",  # Production frontend
 ]
 

@@ -18,15 +18,15 @@ app = FastAPI(title="NexusEnroll API Gateway")
 
 # List of allowed origins (frontend URLs that can call this backend)
 origins = [
-    "http://localhost:5173",   # React, Vue, Angular dev server
-    "http://127.0.0.1:5173",
+    "http://localhost:5175",   # React, Vue, Angular dev server
+    "http://127.0.0.1:5175",
     "*",  # Production frontend
 ]
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # no "*"
+    allow_origins=["http://localhost:5175"],  # no "*"
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

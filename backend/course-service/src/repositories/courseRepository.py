@@ -24,7 +24,7 @@ class CourseRepository:
                 total_capacity=100,
                 current_enrollment=85,
                 prerequisites=[],
-                schedule=None,
+                schedule=["Wed 10.00 A.M" , "Wed 12.00 A.M"],
             ),
             "CS201": Course(
                 id="CS201",
@@ -37,7 +37,7 @@ class CourseRepository:
                 total_capacity=80,
                 current_enrollment=75,
                 prerequisites=["CS101"],
-                schedule=None,
+                schedule=["Wed 10.00 A.M" , "Wed 12.00 A.M"],
             ),
             "CS301": Course(
                 id="CS301",
@@ -50,7 +50,7 @@ class CourseRepository:
                 total_capacity=60,
                 current_enrollment=45,
                 prerequisites=["CS201"],
-                schedule=None,
+                schedule=["Wed 10.00 A.M" , "Wed 12.00 A.M"],
             ),
             "MATH101": Course(
                 id="MATH101",
@@ -63,7 +63,7 @@ class CourseRepository:
                 total_capacity=120,
                 current_enrollment=110,
                 prerequisites=[],
-                schedule=None,
+                schedule=["Wed 10.00 A.M" , "Wed 12.00 A.M"],
             ),
             "MATH201": Course(
                 id="MATH201",
@@ -76,7 +76,7 @@ class CourseRepository:
                 total_capacity=90,
                 current_enrollment=70,
                 prerequisites=["MATH101"],
-                schedule=None,
+                schedule=["Wed 10.00 A.M" , "Wed 12.00 A.M"],
             ),
             "PHYS101": Course(
                 id="PHYS101",
@@ -89,7 +89,7 @@ class CourseRepository:
                 total_capacity=80,
                 current_enrollment=65,
                 prerequisites=[],
-                schedule=None,
+                schedule=["Wed 12.00 A.M" , "Wed 02.00 P.M"],
             ),
         }
         return sample_data
