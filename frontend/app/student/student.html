@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NexusEnroll</title>
   <link rel="stylesheet" href="/static/css/student.css" />
-  <script src="/static/js/student.js"></script>
+  <script src="/static/js/student/studentController.js" type="module" ></script>
   </head>
   <body>
     <aside class="sidebar">
@@ -36,7 +36,7 @@
           class="profile-pic"
         />
         <div class="profile-details">
-          <span class="profile-name">Annie Doe</span>
+          <span class="profile-name">%%PROFILE_NAME%%</span>
           <span class="profile-role">Student</span>
         </div>
       </div>
@@ -45,7 +45,7 @@
     <main class="main-content">
       <header class="top-bar">
         <input
-          type="text"
+          type="text" name="search"
           placeholder="Search courses, instructors, or keywords"
         />
         <button class="btn btn-primary">Search</button>
@@ -56,25 +56,25 @@
           <h3>Filters</h3>
 
           <label class="field-label">Department</label>
-          <input type="text" placeholder="e.g., CS, MATH" />
+          <input type="text" name="department" placeholder="e.g., CS, MATH" />
 
           <label class="field-label">Course Number</label>
-          <input type="text" placeholder="e.g., 101" />
+          <input type="text" name="id" placeholder="e.g., 101" />
 
           <label class="field-label">Keyword</label>
-          <input type="text" placeholder="databases, AI" />
+          <input type="text" name="keyword" placeholder="databases, AI" />
 
           <label class="field-label">Instructor</label>
-          <input type="text" placeholder="Name" />
+          <input type="text" name="instructor" placeholder="Name" />
 
           <label class="field-label">Semester</label>
-          <input type="text" placeholder="Fall 2025" />
+          <input type="text" name="semester" placeholder="Fall 2025" />
 
           <label class="field-label">Status</label>
           <div class="status-options">
-            <label><input type="checkbox" /> Open</label>
-            <label><input type="checkbox" /> Waitlist</label>
-            <label><input type="checkbox" /> Full</label>
+            <label><input type="checkbox" name="open" /> Open</label>
+            <label><input type="checkbox" name="waitlist" /> Waitlist</label>
+            <label><input type="checkbox" name="full" /> Full</label>
           </div>
 
           <div class="filters-actions">
@@ -97,31 +97,8 @@
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>CS 201</td>
-                <td>Data Structures</td>
-                <td>Dr. Patel</td>
-                <td>Mon/Wed 09:00–11:00 (Hall A)</td>
-                <td><span class="capacity available">19 / 25</span></td>
-                <td>CS 101</td>
-                <td>
-                  <button class="btn small ghost">View Details</button><br />
-                  <button class="btn small">Add to Cart</button>
-                </td>
-              </tr>
-              <tr>
-                <td>MATH 310</td>
-                <td>Linear Algebra</td>
-                <td>Prof. Nguyen</td>
-                <td>Tue/Thu 13:00–15:00 (Hall C)</td>
-                <td><span class="capacity limited">22 / 25</span></td>
-                <td>MATH 201</td>
-                <td>
-                  <button class="btn small ghost">View Details</button><br />
-                  <button class="btn small">Add to Cart</button>
-                </td>
-              </tr>
+            <tbody class="course_list">
+              
               <tr>
                 <td>ENG 102</td>
                 <td>Composition II</td>

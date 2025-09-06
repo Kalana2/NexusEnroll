@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse , JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from supabase import create_client, Client
+from fastapi.middleware.cors import CORSMiddleware
 
 SUPABASE_URL = "https://gcepytafvxmgddfrhpah.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjZXB5dGFmdnhtZ2RkZnJocGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwNjA2NTAsImV4cCI6MjA3MjYzNjY1MH0.vE3i9vOh2ZItBE4zp7FcCvoEOmtCdU4_MkUZSB4MhTo"
@@ -13,6 +14,25 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 app = FastAPI(title="NexusEnroll API Gateway")
+
+
+# List of allowed origins (frontend URLs that can call this backend)
+origins = [
+    "http://localhost:5173",   # React, Vue, Angular dev server
+    "http://127.0.0.1:5173",
+    "*",  # Production frontend
+]
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # no "*"
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 
 # Mount static files from /app/public at /static
@@ -31,8 +51,18 @@ async def root():
     return html_content
 
 
+from pydantic import BaseModel
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
 @app.post("/login")
-async def login(response: Response, email: str = Form(...), password: str = Form(...)):
+async def login(request: LoginRequest, response: Response):
+    email = request.email
+    password = request.password
+    print(email, password)
+
 
     # Query Supabase for user with matching email
     result = supabase.table("users").select("*").eq("email", email).execute()
@@ -89,7 +119,8 @@ async def student_page(userid : str = Cookie(None)):
         html_content = f.read()
 
 
-    html_content = html_content.replace("%%PROFILE_PHOTO%%" , user["name"])
+    html_content = html_content.replace("%%PROFILE_PHOTO%%" , user["photo"])
+    html_content = html_content.replace("%%PROFILE_NAME%%" , user["name"])
 
     return html_content
 
