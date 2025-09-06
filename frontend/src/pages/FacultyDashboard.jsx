@@ -2,13 +2,11 @@
 import React, { useEffect, useState } from "react";
 import "./faculty.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faIdCard, faSignIn } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faFile, faIdCard, faSignIn, faTextWidth } from "@fortawesome/free-solid-svg-icons";
 
 const FacultyDashboard = ({setRole,appState ,setAppState}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
-
 
 
   const [grades, setGrades] = useState([
@@ -40,7 +38,7 @@ const FacultyDashboard = ({setRole,appState ,setAppState}) => {
     return;
   }
 
-  const results = appState.courses.filter((course) =>
+  const results = appState?.courses?.filter((course) =>
     [course.id, course.name, course.instructor, course.department, course.semester]
       .filter(Boolean)
       .some((field) =>
@@ -49,7 +47,7 @@ const FacultyDashboard = ({setRole,appState ,setAppState}) => {
   );
 
   setSearchResults(results);
-}, [searchQuery, appState.courses]);
+}, [searchQuery, appState?.courses]);
 
 
   const saveGrades = () => {
@@ -83,7 +81,7 @@ const FacultyDashboard = ({setRole,appState ,setAppState}) => {
               Grades
             </li>
             <li className="nav-item">
-              <img src="/src/img/report.png" alt="reports" />
+              <FontAwesomeIcon icon={faFile} />
               Reports
             </li>
             <li onClick={()=>setRole(false)} className="nav-item" tabIndex={0} style={{color : "#f25757" }}>
@@ -141,7 +139,7 @@ const FacultyDashboard = ({setRole,appState ,setAppState}) => {
               </tr>
             </thead>
             <tbody>
-              {appState.users.map((s) => {
+              {appState?.users?.map((s) => {
                 if (s.role != 'student') return <></>
                 return <tr key={s.id}>
                   <td>{s.id}</td>

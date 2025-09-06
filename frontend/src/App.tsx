@@ -69,7 +69,7 @@ function App() {
     users:[
       {
         id: 1,
-        email:"admin@gmail.com",
+        email:"chathura@gmail.com",
         role:"admin",
         name:"chathura priyashan",
         password:"1234",
@@ -77,26 +77,58 @@ function App() {
       } ,
       {
         id: 2,
-        email:"faculty@gmail.com",
+        email:"kalana@gmail.com",
         role:"faculty",
-        name:"Dr.Jane Smith",
+        name:"kalana jinendra",
         password:"1234",
         contact: "0712345678",
       } ,
       {
         id: 3,
         contact: "0712345678",
-        email:"faculty2@gmail.com",
+        email:"sewmini@gmail.com",
         role:"faculty",
-        name:"sahan gajanayake",
+        name:"sewmini balahewa ",
         password:"1234"
 
       } ,
       {
         id: 4,
-        email:"student@gmail.com",
+        email:"sahan@gmail.com",
+        role:"admin",
+        name:"sahan gajanayake",
+        password:"1234"
+
+      } ,
+      {
+        id: 5,
+        email:"tharindu@gmail.com",
+        role:"faculty",
+        name:"tharindu dilshan",
+        password:"1234"
+
+      } ,
+      {
+        id: 6,
+        email:"janith@gmail.com",
         role:"student",
-        name:"kalana jinendra",
+        name:"janith jayasinghe",
+        password:"1234"
+
+      } ,
+      {
+        id: 7,
+        email:"videesha@gmail.com",
+        role:"admin",
+        name:"videesha navodi",
+        password:"1234"
+
+      } ,
+      {
+        id: 8,
+        email:"chathuni@gmail.com",
+        role:"student",
+        name:"chathuni parindya",
         password:"1234"
 
       } ,
