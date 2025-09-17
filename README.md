@@ -363,8 +363,7 @@ docker-compose up --build
 3. npm run api # starts json-server on http://localhost:3001
 4. npm run dev # starts React app on http://localhost:5173
 
-login Credentials
-
+## Login Credentials
 admin
 - email: chathura@gmail.com
 - password: 1234
