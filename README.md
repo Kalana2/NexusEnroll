@@ -355,11 +355,27 @@ Unified edge entrypoint for routing, auth, and aggregation.
 
 
 ## how to run Run
+docker-compose up --build
+
 | Go to inside ./frontend
 1. cd ./frontend
 2. npm i
 3. npm run api # starts json-server on http://localhost:3001
 4. npm run dev # starts React app on http://localhost:5173
+
+login Credentials
+
+admin
+email: chathura@gmail.com
+password: 1234
+
+student
+email: kalana@gmail.com
+password: 1234
+
+faculty
+email: sewmini@gmail.com
+password: 1234
 
 
 ## Where patterns live
