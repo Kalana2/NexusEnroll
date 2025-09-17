@@ -366,16 +366,16 @@ docker-compose up --build
 login Credentials
 
 admin
-email: chathura@gmail.com
-password: 1234
+- email: chathura@gmail.com
+- password: 1234
 
 student
-email: kalana@gmail.com
-password: 1234
+- email: kalana@gmail.com
+- password: 1234
 
 faculty
-email: sewmini@gmail.com
-password: 1234
+- email: sewmini@gmail.com
+- password: 1234
 
 
 ## Where patterns live
